@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.alexandramolina.cely.MainActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            app:srcCompat="@drawable/cely_logo" />
+
+        <TextView
+            android:id="@+id/txt_usuario"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/imageView"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="16dp"
+            android:background="#11000000"
+            android:fontFamily="sans-serif"
+            android:hint="Usuario"
+            android:inputType="textPersonName"
+            android:drawableLeft="@drawable/ic_action_usuario"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/txt_contrasena"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/txt_usuario"
+            android:layout_below="@+id/txt_usuario"
+            android:layout_marginTop="26dp"
+            android:background="#11000000"
+            android:fontFamily="sans-serif"
+            android:inputType="textPassword"
+            android:drawableLeft="@drawable/ic_action_contrasena"
+            android:hint="Contraseña"
+            android:textSize="18sp" />
+
+        <Button
+            android:id="@+id/btn_iniciarSesion"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/txt_contrasena"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="23dp"
+            android:text="Iniciar Sesión" />
+
+        <TextView
+            android:id="@+id/txt_ayuda"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginEnd="12dp"
+            android:layout_marginTop="12dp"
+            android:text="Ayuda"
+            android:textColor="@android:color/background_dark"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignStart="@+id/imageView"
+            android:layout_marginBottom="13dp"
+            android:text="¿Eres nuevo en Cely?"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/textView5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/textView4"
+            android:layout_alignBottom="@+id/textView4"
+            android:layout_alignEnd="@+id/imageView"
+            android:layout_marginEnd="21dp"
+            android:text="Regístrate"
+            android:textColor="@android:color/background_dark"
+            android:textSize="18sp" />
+    </RelativeLayout>
+</android.support.constraint.ConstraintLayout>
