@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.alexandramolina.cely.AyudaActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/background"
+        tools:layout_editor_absoluteX="8dp"
+        tools:layout_editor_absoluteY="8dp">
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:text="Ayuda"
+            android:textColor="@android:color/background_dark"
+            android:textSize="30sp" />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textView3"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="29dp"
+            android:text="Acerca de"
+            android:textColor="@android:color/background_dark"
+            android:textSize="30sp" />
+
+        <Button
+            android:id="@+id/button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginBottom="16dp"
+            android:layout_marginEnd="13dp"
+            android:text="Atrás" />
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/textView"
+            android:layout_marginTop="11dp"
+            android:text="Cely es una aplicación para dispositivos móviles que permite traducir de un idioma a otro una página web. La aplicación funciona copiando o ingresando el link de la página web e indicando en la aplicación el idioma en el que se encuentra y al idioma que se desea traducir, el programa devolverá la misma página pero traducida con la posibilidad de poder guardarla en la aplicación. Los idiomas para traducir son el español, inglés, francés, portugués e italiano. La aplicación posee la posibilidad de agregar notas y subrayar las traducciones de las páginas como si fueran apuntes de un cuaderno. También, se pueden crear nuevas notas en blanco para usos varios. Además, cuenta con una sección de traductor de palabras."
+            android:textAlignment="center"
+            android:textColor="@android:color/background_dark"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/textView5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/textView2"
+            android:text="Esta aplicación fue creada por Alexandra Molina Alpízar y Andrés Sancho Arroyo como proyecto 1 para el curso de Desarrollo de Aplicaciones para Dispositivos Móviles del ITCR."
+            android:textAlignment="center"
+            android:textColor="@android:color/background_dark" />
+
+    </RelativeLayout>
+</android.support.constraint.ConstraintLayout>
