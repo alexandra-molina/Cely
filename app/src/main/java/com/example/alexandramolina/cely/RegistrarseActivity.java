@@ -9,10 +9,17 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Base64;
 import android.util.Log;
+import android.util.Patterns;
+import android.view.View;
 import android.view.Window;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.basgeekball.awesomevalidation.AwesomeValidation;
+import com.basgeekball.awesomevalidation.ValidationStyle;
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
@@ -35,9 +42,13 @@ import java.util.Arrays;
 public class RegistrarseActivity extends AppCompatActivity {
 
     CallbackManager callbackManager;
-    TextView txtEmail, txtBirthday;
+    TextView txtBirthday;
     ProgressDialog mDialog;
     ImageView imgAvatar;
+    EditText txtEmail, txtUsuario, txtPassword, txtConfirmPassword;
+    Button btnCrearUsuario;
+
+    AwesomeValidation awesomeValidation;
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -52,10 +63,37 @@ public class RegistrarseActivity extends AppCompatActivity {
 
         callbackManager = CallbackManager.Factory.create();
 
+        awesomeValidation = new AwesomeValidation(ValidationStyle.BASIC);
+
         txtBirthday = findViewById(R.id.txtBirthday);
-        txtEmail = findViewById(R.id.txtEmail);
+        txtEmail = findViewById(R.id.txtEmail2);
 
         imgAvatar = findViewById(R.id.avatar);
+
+        txtUsuario = findViewById(R.id.txtUsuario);
+        txtPassword = findViewById(R.id.txtPassword);
+        txtConfirmPassword = findViewById(R.id.txtConfirmPassword);
+
+        btnCrearUsuario = findViewById(R.id.crearUsuario_button);
+
+        String regexPassword = "(?=.*[a-z])(?=.*[A-Z])(?=.*[\\d])(?=.*[~`!@#\\$%\\^&\\*\\(\\)\\-_\\+=\\{\\}\\[\\]\\|\\;:\"<>,./\\?]).{8,}";
+
+        awesomeValidation.addValidation(RegistrarseActivity.this, R.id.txt_usuario, "[a-zA-Z\\s]+",R.string.fusuario);
+        awesomeValidation.addValidation(RegistrarseActivity.this, R.id.txtEmail2, Patterns.EMAIL_ADDRESS,R.string.femail);
+        awesomeValidation.addValidation(RegistrarseActivity.this, R.id.txtPassword,regexPassword,R.string.fpassword);
+        awesomeValidation.addValidation(RegistrarseActivity.this, R.id.txtConfirmPassword, R.id.txtPassword,R.string.fConfirmpassword);
+
+        btnCrearUsuario.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(awesomeValidation.validate()){
+                    Toast.makeText(RegistrarseActivity.this, "Data received Succesfully", Toast.LENGTH_SHORT);
+                }
+                else{
+                    Toast.makeText(RegistrarseActivity.this, "Error", Toast.LENGTH_SHORT);
+                }
+            }
+        });
 
         final LoginButton loginButton = findViewById(R.id.login_button);
         loginButton.setReadPermissions(Arrays.asList("public_profile", "email", "user_birthday"));
