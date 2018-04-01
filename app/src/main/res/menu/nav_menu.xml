@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/uduario"
+        android:title="Usuario">
+    </item>
+    <item android:id="@+id/convertidor"
+        android:title="Convertidor">
+
+    </item>
+    <item android:id="@+id/archivos"
+        android:title="Mis Archivos">
+
+    </item>
+    <item android:id="@+id/paginasSugeridas"
+        android:title="Páginas Sugeridas">
+
+    </item>
+    <item android:id="@+id/traductor"
+        android:title="Traductor">
+
+    </item>
+    <item android:id="@+id/cerrarSesion"
+        android:title="Cerrar Sesión">
+
+    </item>
+
+
+</menu>
