@@ -24,7 +24,7 @@
         </activity>
         <activity android:name=".AyudaActivity" />
         <activity android:name=".RegistrarseActivity" />
-        <activity android:name=".Transalation"></activity>
+        <activity android:name=".Translation"></activity>
     </application>
 
 </manifest>

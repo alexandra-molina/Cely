@@ -34,7 +34,7 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.concurrent.ExecutionException;
 
-public class Transalation extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class Translation extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mToggle;
     private ArrayList<String> textos=new ArrayList<>();
@@ -114,7 +114,7 @@ public class Transalation extends AppCompatActivity implements NavigationView.On
                         .setApiKey("AIzaSyBArteM1ejf2C6fCBZojg0JZkD7ZZ9IiQk")
                         .build();
                 Translate translate = options.getService();
-                final Translation translation =
+                final com.google.cloud.translate.Translation translation =
                         translate.translate(s,
                                 Translate.TranslateOption.targetLanguage("spa"));
                 salida.add(translation.getTranslatedText());
