@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
     public void abrirActivityRegistrase(){
-        Intent intent = new Intent(this, RegistrarseActivity.class);
+        Intent intent = new Intent(this, Transalation.class);
         startActivity(intent);
     }
 }
