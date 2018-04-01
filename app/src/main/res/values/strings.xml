@@ -2,6 +2,15 @@
     <string name="app_name">Cely</string>
     <string name="facebook_app_id">1444893648971160</string>
     <string name="facebook_login_protocol_scheme">fb1444893648971160</string>
+
     <string name="open">Open</string>
     <string name="close">Close</string>
+
+
+    <string name="fusuario">Ingrese un nombre de usuario valido</string>
+    <string name="femail">Ingrese un correo electrónico valido</string>
+    <string name="fpassword">Ingrese una contraseña valida</string>
+    <string name="fConfirmpassword">Las contraseñas no coinciden</string>
+
+
 </resources>
