@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.alexandramolina.cely">
-    
+
     <uses-permission android:name="android.permission.INTERNET"></uses-permission>
 
     <application
@@ -11,12 +11,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <meta-data
+            android:name="com.facebook.sdk.ApplicationId"
+            android:value="@string/facebook_app_id"></meta-data>
 
-
-        <meta-data android:name="com.facebook.sdk.ApplicationId"
-            android:value="@string/facebook_app_id">
-
-        </meta-data>
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -25,7 +23,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".AyudaActivity" />
-        <activity android:name=".RegistrarseActivity"></activity>
+        <activity android:name=".RegistrarseActivity" />
+        <activity android:name=".Translation"></activity>
     </application>
 
 </manifest>
