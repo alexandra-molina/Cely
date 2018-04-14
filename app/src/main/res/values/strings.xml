@@ -13,4 +13,14 @@
     <string name="open">Open</string>
     <string name="close">Close</string>
 
+    <string-array name="Idiomas">
+        <item>Español</item>
+        <item>Inglés</item>
+        <item>Portugués</item>
+        <item>Italiano</item>
+        <item>Francés</item>
+        <item>Alemán</item>
+        <item>Ruso</item>
+    </string-array>
+
 </resources>

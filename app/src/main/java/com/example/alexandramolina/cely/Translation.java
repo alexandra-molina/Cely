@@ -1,6 +1,8 @@
 package com.example.alexandramolina.cely;
 
 import android.os.AsyncTask;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
@@ -10,9 +12,17 @@ import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ProgressBar;
+import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.cloud.translate.Translate;
 import com.google.cloud.translate.TranslateOptions;
@@ -34,27 +44,90 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.concurrent.ExecutionException;
 
-public class Translation extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+
+public class Translation extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, AdapterView.OnItemSelectedListener{
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mToggle;
     private ArrayList<String> textos=new ArrayList<>();
     private String traduccion="";
     private DownloadTask dt;
     private TranslationTask tt;
+    private Button btn_traducir;
+    private EditText txt_link;
+    private String link;
+    private Spinner spinner;
+    private String idioma ="spa";
+    private ProgressBar progressBar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_transalation);
 
+        btn_traducir = findViewById(R.id.btnTraducir);
+        txt_link = findViewById(R.id.link);
+        spinner = findViewById(R.id.spinner);
+        progressBar = findViewById(R.id.progress_bar);
+
+        progressBar.setVisibility(View.INVISIBLE);
+
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.Idiomas, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
+        spinner.setOnItemSelectedListener(this);
+
         mDrawerLayout = findViewById(R.id.drawer);
-        mToggle= new ActionBarDrawerToggle(this,mDrawerLayout,R.string.open,R.string.close);
+        mToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.open, R.string.close);
         mDrawerLayout.addDrawerListener(mToggle);
         mToggle.syncState();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-
+        btn_traducir.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                link = txt_link.getText().toString();
+                progressBar.setVisibility(View.VISIBLE);
+                traducir();
+            }
+        });
 
     }
+
+    @Override
+    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+        String text = adapterView.getItemAtPosition(i).toString();
+        Toast.makeText(adapterView.getContext(), text, Toast.LENGTH_SHORT);
+        /*switch(i){
+            case 0:
+                idioma = "spa";
+                break;
+            case 1:
+                idioma = "en";
+                break;
+            case 2:
+                idioma = "pt";
+                break;
+            case 3:
+                idioma = "it";
+                break;
+            case 4:
+                idioma = "fr";
+                break;
+            case 5:
+                idioma = "de";
+                break;
+            case 6:
+                idioma = "ru";
+                break;
+        }*/
+
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> adapterView) {
+
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item){
         if(mToggle.onOptionsItemSelected(item)){
@@ -76,18 +149,19 @@ public class Translation extends AppCompatActivity implements NavigationView.OnN
         Document document=null;
         Elements nombres=null;
         try {
-            String html= dt.execute("http://www.bbc.com/news/world-middle-east-43609046").get();
+            String html= dt.execute(link).get();
+            Log.i("HTML", html);
             document = Jsoup.parse(html);
-            nombres = document.select("div");
+            nombres = document.select("spa");
 
             for (int i = 0; i < nombres.size(); i++) {
                 textos.add(nombres.get(i).text());
             }
 
-            Set<String> hs = new HashSet<>();
-            hs.addAll(textos);
-            textos.clear();
-            textos.addAll(hs);
+            //Set<String> hs = new HashSet<>();
+            //hs.addAll(textos);
+            //textos.clear();
+            //textos.addAll(hs);
             textos= tt.execute(textos).get();
 
             for(String s:textos){
@@ -149,7 +223,7 @@ public class Translation extends AppCompatActivity implements NavigationView.OnN
                 StringBuilder stringBuilder = new StringBuilder();
 
 
-                while((input = reader.readLine()) != null){
+                while ((input = reader.readLine()) != null) {
                     stringBuilder.append("\n");
                     stringBuilder.append(input);
                 }
@@ -162,7 +236,7 @@ public class Translation extends AppCompatActivity implements NavigationView.OnN
 
             } catch (MalformedURLException e) {
                 e.printStackTrace();
-            }  catch (IOException e) {
+            } catch (IOException e) {
                 e.printStackTrace();
             }
 
@@ -170,9 +244,4 @@ public class Translation extends AppCompatActivity implements NavigationView.OnN
         }
 
     }
-
-
-
-
-
 }
