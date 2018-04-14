@@ -36,6 +36,7 @@ dependencies {
     implementation 'com.android.support:appcompat-v7:26.1.0'
     implementation 'com.android.support.constraint:constraint-layout:1.0.2'
     testImplementation 'junit:junit:4.12'
+
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
 
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
@@ -47,10 +48,10 @@ dependencies {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
 
-    compile ('com.google.apis:google-api-services-translate:v2-rev47-1.22.0') {
+    compile('com.google.apis:google-api-services-translate:v2-rev47-1.22.0') {
         exclude group: 'com.google.guava'
     }
-    compile ('com.google.cloud:google-cloud-translate:1.24.0') {
+    compile('com.google.cloud:google-cloud-translate:1.24.0') {
         exclude group: 'io.grpc', module: 'grpc-all'
         exclude group: 'com.google.protobuf', module: 'protobuf-java'
         exclude group: 'com.google.api-client', module: 'google-api-client-appengine'
@@ -60,6 +61,7 @@ dependencies {
     implementation 'com.android.support:design:26.1.0'
 
 
+    implementation 'com.basgeekball:awesome-validation:4.1'
 
 
 }
