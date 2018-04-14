@@ -21,6 +21,15 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <ProgressBar
+            android:id="@+id/progress_bar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+
+            android:theme="@style/ProgressTheme" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -97,8 +106,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:text="Traducir"
-                    android:padding="10dp"/>
+                    android:onClick="translate"
+                    android:padding="10dp"
+                    android:text="Traducir" />
             </LinearLayout>
 
 

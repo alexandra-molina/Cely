@@ -1,5 +1,6 @@
 package com.example.alexandramolina.cely;
 
+import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
@@ -10,13 +11,19 @@ import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ProgressBar;
+import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.cloud.translate.Translate;
 import com.google.cloud.translate.TranslateOptions;
-import com.google.cloud.translate.Translation;
+
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -41,10 +48,60 @@ public class Translation extends AppCompatActivity implements NavigationView.OnN
     private String traduccion="";
     private DownloadTask dt;
     private TranslationTask tt;
+    private Spinner spinner;
+    private ProgressBar progressBar;
+    private String idioma ="spa";
+    private ProgressDialog pDialog;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_transalation);
+
+        spinner = findViewById(R.id.spinner);
+        progressBar = findViewById(R.id.progress_bar);
+        progressBar.setVisibility(View.INVISIBLE);
+
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.Idiomas, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View selectedItemView, int position, long id) {
+                String text = adapterView.getItemAtPosition(position).toString();
+                Toast.makeText(adapterView.getContext(), text, Toast.LENGTH_SHORT);
+                switch(position){
+                    case 0:
+                        idioma = "spa";
+                        break;
+                    case 1:
+                        idioma = "en";
+                        break;
+                    case 2:
+                        idioma = "pt";
+                        break;
+                    case 3:
+                        idioma = "it";
+                        break;
+                    case 4:
+                        idioma = "fr";
+                        break;
+                    case 5:
+                        idioma = "de";
+                        break;
+                    case 6:
+                        idioma = "ru";
+                        break;
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parentView) {
+                // your code here
+            }
+
+        });
+
 
         mDrawerLayout = findViewById(R.id.drawer);
         mToggle= new ActionBarDrawerToggle(this,mDrawerLayout,R.string.open,R.string.close);
@@ -54,7 +111,17 @@ public class Translation extends AppCompatActivity implements NavigationView.OnN
 
 
 
+
+
     }
+
+    public void translate(View view){
+
+        traducir();
+    }
+
+
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item){
         if(mToggle.onOptionsItemSelected(item)){
@@ -71,6 +138,7 @@ public class Translation extends AppCompatActivity implements NavigationView.OnN
     }
 
     public void traducir(){
+        progressBar.setVisibility(View.VISIBLE);
         dt= new DownloadTask();
         tt=new TranslationTask();
         Document document=null;
@@ -101,12 +169,15 @@ public class Translation extends AppCompatActivity implements NavigationView.OnN
         } catch (ExecutionException e) {
             e.printStackTrace();
         }
+
     }
 
-    public class TranslationTask extends AsyncTask<ArrayList<String>, Void, ArrayList<String>> {
+
+    public class TranslationTask extends AsyncTask<ArrayList<String>, Integer, ArrayList<String>> {
 
         @Override
         protected ArrayList<String> doInBackground(ArrayList<String>... urls) {
+
             ArrayList<String> a=urls[0];
             ArrayList<String> salida=new ArrayList<>();
             for(String s:a){
@@ -116,7 +187,7 @@ public class Translation extends AppCompatActivity implements NavigationView.OnN
                 Translate translate = options.getService();
                 final com.google.cloud.translate.Translation translation =
                         translate.translate(s,
-                                Translate.TranslateOption.targetLanguage("spa"));
+                                Translate.TranslateOption.targetLanguage(idioma));
                 salida.add(translation.getTranslatedText());
             }
             for(String s:salida){
@@ -126,6 +197,35 @@ public class Translation extends AppCompatActivity implements NavigationView.OnN
 
             return salida;
         }
+
+        @Override
+        protected void onProgressUpdate(Integer... values) {
+            //super.onProgressUpdate(values);
+        }
+
+        @Override
+        protected void onPostExecute(ArrayList<String> strings) {
+            super.onPostExecute(strings);
+            progressBar.setVisibility(View.GONE);
+            //pDialog.dismiss();
+
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+
+/*            pDialog = new ProgressDialog(Translation.this,
+                    ProgressDialog.THEME_DEVICE_DEFAULT_DARK);
+            pDialog.setTitle("Please wait");
+            pDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+            pDialog.setMessage("Loading data...");
+            pDialog.setIndeterminate(true);
+            pDialog.setCancelable(false);
+            pDialog.setInverseBackgroundForced(true);
+            pDialog.show();*/
+        }
+
 
     }
 
