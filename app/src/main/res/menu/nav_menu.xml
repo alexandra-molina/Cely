@@ -15,6 +15,11 @@
         android:title="Páginas Sugeridas">
 
     </item>
+
+    <item android:id="@+id/noticias"
+        android:title="Noticias Sugeridas">
+
+    </item>
     <item android:id="@+id/traductor"
         android:title="Traductor">
 

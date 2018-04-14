@@ -11,6 +11,7 @@
     <string name="femail">Ingrese un correo electrónico valido</string>
     <string name="fpassword">Ingrese una contraseña valida</string>
     <string name="fConfirmpassword">Las contraseñas no coinciden</string>
+    <string name="title_activity_notas">NotasActivity</string>
 
 
 </resources>
