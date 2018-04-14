@@ -3,13 +3,21 @@
     <string name="facebook_app_id">1444893648971160</string>
     <string name="facebook_login_protocol_scheme">fb1444893648971160</string>
 
+<<<<<<< HEAD
+=======
+    <string name="open">Open</string>
+    <string name="close">Close</string>
+
+>>>>>>> Sancho
 
     <string name="fusuario">Ingrese un nombre de usuario valido</string>
     <string name="femail">Ingrese un correo electrónico valido</string>
     <string name="fpassword">Ingrese una contraseña valida</string>
     <string name="fConfirmpassword">Las contraseñas no coinciden</string>
+    <string name="title_activity_notas">NotasActivity</string>
 
 
+<<<<<<< HEAD
     <string name="open">Open</string>
     <string name="close">Close</string>
 
@@ -23,4 +31,6 @@
         <item>Ruso</item>
     </string-array>
 
+=======
+>>>>>>> Sancho
 </resources>
