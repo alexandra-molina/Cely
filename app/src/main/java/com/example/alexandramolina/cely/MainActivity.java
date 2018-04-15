@@ -49,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, RegistrarseActivity.class);
         startActivity(intent);
     }
+
     public void abrirActivityTraductor(){
         Intent intent = new Intent(this, Translation.class);
         startActivity(intent);

@@ -1,9 +1,6 @@
 package com.example.alexandramolina.cely;
 
-import android.app.ProgressDialog;
 import android.os.AsyncTask;
-import android.os.Handler;
-import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
@@ -17,9 +14,9 @@ import android.view.View;
 
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+
 import android.widget.Button;
 import android.widget.EditText;
-
 import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -54,11 +51,10 @@ public class Translation extends AppCompatActivity implements NavigationView.OnN
     private TranslationTask tt;
     private Button btn_traducir;
     private EditText txt_link;
-    private String link;
     private Spinner spinner;
     private ProgressBar progressBar;
     private String idioma ="spa";
-    private ProgressDialog pDialog;
+    private EditText link;
 
 
     @Override
@@ -70,10 +66,9 @@ public class Translation extends AppCompatActivity implements NavigationView.OnN
         btn_traducir = findViewById(R.id.btnTraducir);
         txt_link = findViewById(R.id.link);
         spinner = findViewById(R.id.spinner);
-        progressBar = findViewById(R.id.progress_bar);
 
 
-        progressBar.setVisibility(View.INVISIBLE);
+        link = findViewById(R.id.link);
 
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.Idiomas, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -148,25 +143,24 @@ public class Translation extends AppCompatActivity implements NavigationView.OnN
     }
 
     public void traducir(){
-        progressBar.setVisibility(View.VISIBLE);
+
         dt= new DownloadTask();
         tt=new TranslationTask();
         Document document=null;
         Elements nombres=null;
         try {
-            String html= dt.execute(link).get();
-            Log.i("HTML", html);
+
+
+            String html= dt.execute(link.getText().toString()).get();
+
             document = Jsoup.parse(html);
-            nombres = document.select("spa");
+            nombres = document.select("div.story-body__inner p,div.story-body__inner h2, div.story-body__inner ul");
 
             for (int i = 0; i < nombres.size(); i++) {
                 textos.add(nombres.get(i).text());
             }
 
-            //Set<String> hs = new HashSet<>();
-            //hs.addAll(textos);
-            //textos.clear();
-            //textos.addAll(hs);
+
             textos= tt.execute(textos).get();
 
             for(String s:textos){
@@ -221,14 +215,13 @@ public class Translation extends AppCompatActivity implements NavigationView.OnN
 
         @Override
         protected void onProgressUpdate(Integer... values) {
-            //super.onProgressUpdate(values);
+            super.onProgressUpdate(values);
         }
 
         @Override
         protected void onPostExecute(ArrayList<String> strings) {
             super.onPostExecute(strings);
-            progressBar.setVisibility(View.GONE);
-            //pDialog.dismiss();
+            Toast.makeText(getApplicationContext(),"Ha terminado",Toast.LENGTH_LONG);
 
         }
 
@@ -236,15 +229,6 @@ public class Translation extends AppCompatActivity implements NavigationView.OnN
         protected void onPreExecute() {
             super.onPreExecute();
 
-/*            pDialog = new ProgressDialog(Translation.this,
-                    ProgressDialog.THEME_DEVICE_DEFAULT_DARK);
-            pDialog.setTitle("Please wait");
-            pDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-            pDialog.setMessage("Loading data...");
-            pDialog.setIndeterminate(true);
-            pDialog.setCancelable(false);
-            pDialog.setInverseBackgroundForced(true);
-            pDialog.show();*/
         }
 
 
