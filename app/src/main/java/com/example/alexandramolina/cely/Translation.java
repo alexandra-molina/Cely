@@ -16,6 +16,7 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -49,9 +50,10 @@ public class Translation extends AppCompatActivity implements NavigationView.OnN
     private DownloadTask dt;
     private TranslationTask tt;
     private Spinner spinner;
-    private ProgressBar progressBar;
+    //private ProgressBar progressBar;
     private String idioma ="spa";
     private ProgressDialog pDialog;
+    private EditText link;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,8 +61,9 @@ public class Translation extends AppCompatActivity implements NavigationView.OnN
         setContentView(R.layout.activity_transalation);
 
         spinner = findViewById(R.id.spinner);
-        progressBar = findViewById(R.id.progress_bar);
-        progressBar.setVisibility(View.INVISIBLE);
+        //progressBar = findViewById(R.id.progress_bar);
+        //progressBar.setVisibility(View.INVISIBLE);
+        link = findViewById(R.id.link);
 
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.Idiomas, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -138,13 +141,13 @@ public class Translation extends AppCompatActivity implements NavigationView.OnN
     }
 
     public void traducir(){
-        progressBar.setVisibility(View.VISIBLE);
+        //progressBar.setVisibility(View.VISIBLE);
         dt= new DownloadTask();
         tt=new TranslationTask();
         Document document=null;
         Elements nombres=null;
         try {
-            String html= dt.execute("http://www.bbc.com/news/world-middle-east-43609046").get();
+            String html= dt.execute(link.getText().toString()).get();
             document = Jsoup.parse(html);
             nombres = document.select("div");
 
@@ -206,7 +209,7 @@ public class Translation extends AppCompatActivity implements NavigationView.OnN
         @Override
         protected void onPostExecute(ArrayList<String> strings) {
             super.onPostExecute(strings);
-            progressBar.setVisibility(View.GONE);
+            //progressBar.setVisibility(View.GONE);
             //pDialog.dismiss();
 
         }
