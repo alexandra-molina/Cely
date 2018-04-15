@@ -37,6 +37,10 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
     public void abrirActivityRegistrase(){
+        Intent intent = new Intent(this, RegistrarseActivity.class);
+        startActivity(intent);
+    }
+    public void iniciarSesion(View view){
         Intent intent = new Intent(this, Translation.class);
         startActivity(intent);
     }

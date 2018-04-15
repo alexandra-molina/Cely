@@ -50,7 +50,7 @@ public class Translation extends AppCompatActivity implements NavigationView.OnN
     private DownloadTask dt;
     private TranslationTask tt;
     private Spinner spinner;
-    //private ProgressBar progressBar;
+    private ProgressBar progressBar;
     private String idioma ="spa";
     private ProgressDialog pDialog;
     private EditText link;
@@ -61,8 +61,8 @@ public class Translation extends AppCompatActivity implements NavigationView.OnN
         setContentView(R.layout.activity_transalation);
 
         spinner = findViewById(R.id.spinner);
-        //progressBar = findViewById(R.id.progress_bar);
-        //progressBar.setVisibility(View.INVISIBLE);
+        progressBar = findViewById(R.id.progress_bar);
+        progressBar.setVisibility(View.INVISIBLE);
         link = findViewById(R.id.link);
 
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.Idiomas, android.R.layout.simple_spinner_item);
@@ -111,9 +111,6 @@ public class Translation extends AppCompatActivity implements NavigationView.OnN
         mDrawerLayout.addDrawerListener(mToggle);
         mToggle.syncState();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-
-
 
 
     }
@@ -203,14 +200,13 @@ public class Translation extends AppCompatActivity implements NavigationView.OnN
 
         @Override
         protected void onProgressUpdate(Integer... values) {
-            //super.onProgressUpdate(values);
+            super.onProgressUpdate(values);
         }
 
         @Override
         protected void onPostExecute(ArrayList<String> strings) {
             super.onPostExecute(strings);
-            //progressBar.setVisibility(View.GONE);
-            //pDialog.dismiss();
+            Toast.makeText(getApplicationContext(),"Ha terminado",Toast.LENGTH_LONG);
 
         }
 
@@ -218,15 +214,6 @@ public class Translation extends AppCompatActivity implements NavigationView.OnN
         protected void onPreExecute() {
             super.onPreExecute();
 
-/*            pDialog = new ProgressDialog(Translation.this,
-                    ProgressDialog.THEME_DEVICE_DEFAULT_DARK);
-            pDialog.setTitle("Please wait");
-            pDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-            pDialog.setMessage("Loading data...");
-            pDialog.setIndeterminate(true);
-            pDialog.setCancelable(false);
-            pDialog.setInverseBackgroundForced(true);
-            pDialog.show();*/
         }
 
 

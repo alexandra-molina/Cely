@@ -87,6 +87,7 @@
             android:layout_below="@+id/txt_contrasena"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="23dp"
+            android:onClick="iniciarSesion"
             android:text="Iniciar Sesión" />
 
         <TextView
