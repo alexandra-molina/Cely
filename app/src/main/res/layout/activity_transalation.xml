@@ -59,7 +59,7 @@
                     android:layout_weight="1"
                     android:ems="20"
                     android:inputType="textPersonName"
-                    android:text="http://www.bbc.com/news/business-43656378" />
+                    android:text="http://www.bbc.com/news/world-us-canada-43776171 " />
 
             </LinearLayout>
             <LinearLayout

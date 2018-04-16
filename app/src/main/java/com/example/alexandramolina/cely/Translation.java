@@ -1,5 +1,6 @@
 package com.example.alexandramolina.cely;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
@@ -46,7 +47,6 @@ public class Translation extends AppCompatActivity implements NavigationView.OnN
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mToggle;
     private ArrayList<String> textos=new ArrayList<>();
-    private String traduccion="";
     private DownloadTask dt;
     private TranslationTask tt;
     private Button btn_traducir;
@@ -55,6 +55,8 @@ public class Translation extends AppCompatActivity implements NavigationView.OnN
     private ProgressBar progressBar;
     private String idioma ="spa";
     private EditText link;
+    private ArrayList<String> tipos = new ArrayList<>();
+    private ArrayList<String> imagenes = new ArrayList<>();
 
 
     @Override
@@ -117,12 +119,17 @@ public class Translation extends AppCompatActivity implements NavigationView.OnN
         mToggle.syncState();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+    }
 
+    public void abrirActivityTraductor(){
+        Intent intent = new Intent(Translation.this, NoticiaTraducidaActivity.class);
+        intent.putExtra("texto",textos);
+        intent.putExtra("tipo",tipos);
+        startActivity(intent);
     }
 
 
     public void translate(View view){
-
         traducir();
     }
 
@@ -154,20 +161,36 @@ public class Translation extends AppCompatActivity implements NavigationView.OnN
             String html= dt.execute(link.getText().toString()).get();
 
             document = Jsoup.parse(html);
-            nombres = document.select("div.story-body__inner p,div.story-body__inner h2, div.story-body__inner ul");
+            nombres = document.select("div.story-body h1, div.story-body__inner p, div.story-body__inner ul li, div.story-body__inner h2, div.story-body__inner figure span img");
 
             for (int i = 0; i < nombres.size(); i++) {
-                textos.add(nombres.get(i).text());
-            }
 
+                if(nombres.get(i).tagName() == "figure"){
+
+                    textos.add("");
+
+                    if(nombres.get(i).tagName() == "img"){
+                        imagenes.add(nombres.get(i).attr("js-image-replace"));
+                    }
+
+                }
+
+                else {
+                    textos.add(nombres.get(i).text());
+                }
+                tipos.add(nombres.get(i).tagName());
+                //Log.i("Nombres:", nombres.get(i).tagName());
+
+            }
 
             textos= tt.execute(textos).get();
 
-            for(String s:textos){
-                Log.d("PRUEBA",s);
-                traduccion =traduccion + s + "\n \n";
+            //for(String s:tipos){
+            //    Log.d("TIPO:",s);
+            //}
 
-            }
+            abrirActivityTraductor();
+
 
         } catch (InterruptedException e) {
             e.printStackTrace();
@@ -196,20 +219,20 @@ public class Translation extends AppCompatActivity implements NavigationView.OnN
             ArrayList<String> a=urls[0];
             ArrayList<String> salida=new ArrayList<>();
             for(String s:a){
-                TranslateOptions options = TranslateOptions.newBuilder()
-                        .setApiKey("AIzaSyBArteM1ejf2C6fCBZojg0JZkD7ZZ9IiQk")
-                        .build();
-                Translate translate = options.getService();
-                final com.google.cloud.translate.Translation translation =
-                        translate.translate(s,
-                                Translate.TranslateOption.targetLanguage(idioma));
-                salida.add(translation.getTranslatedText());
+                if(s != "") {
+                    TranslateOptions options = TranslateOptions.newBuilder()
+                            .setApiKey("AIzaSyBArteM1ejf2C6fCBZojg0JZkD7ZZ9IiQk")
+                            .build();
+                    Translate translate = options.getService();
+                    final com.google.cloud.translate.Translation translation =
+                            translate.translate(s,
+                                    Translate.TranslateOption.targetLanguage(idioma));
+                    salida.add(translation.getTranslatedText());
+                }
             }
-            for(String s:salida){
-                Log.d("PRUEBA",s);
-            }
-
-
+            //for(String s:salida){
+            //    Log.d("PRUEBA",s);
+            //}
             return salida;
         }
 
