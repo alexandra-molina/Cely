@@ -34,7 +34,8 @@
         <activity android:name=".NoticiasActivity" />
         <activity android:name=".TraductorActivity" />
         <activity android:name=".PalabraActivity" />
-        <activity android:name=".NoticiaTraducidaActivity"></activity>
+        <activity android:name=".NoticiaTraducidaActivity" />
+        <activity android:name=".PrincipalActivity"></activity>
     </application>
 
 </manifest>

@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
@@ -64,6 +65,7 @@ public class Translation extends AppCompatActivity implements NavigationView.OnN
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_transalation);
 
+        setNavigationViewListner();
 
         btn_traducir = findViewById(R.id.btnTraducir);
         txt_link = findViewById(R.id.link);
@@ -134,6 +136,11 @@ public class Translation extends AppCompatActivity implements NavigationView.OnN
         traducir();
     }
 
+    private void setNavigationViewListner(){
+        NavigationView navigationView = findViewById(R.id.navigation_view);
+        navigationView.setNavigationItemSelectedListener(this);
+    }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item){
@@ -146,7 +153,40 @@ public class Translation extends AppCompatActivity implements NavigationView.OnN
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        int id=item.getItemId();
+
+        Log.d("SI","si");
+
+        switch(item.getItemId()){
+            case R.id.convertidor:{
+                Toast.makeText(this, "Este es el convertidor", Toast.LENGTH_SHORT).show();
+                break;
+            }
+            case R.id.usuario:{
+                Toast.makeText(this, "Este es el usuario", Toast.LENGTH_SHORT).show();
+                break;
+            }
+            case R.id.archivos:{
+                Toast.makeText(this, "Estas son los archivos", Toast.LENGTH_SHORT).show();
+                break;
+            }
+            case R.id.paginasSugeridas:{
+                Toast.makeText(this, "Estas son las paginas sugeridas", Toast.LENGTH_SHORT).show();
+                break;
+            }
+            case R.id.noticias:{
+                Toast.makeText(this, "Estas son las noticias", Toast.LENGTH_SHORT).show();
+                break;
+            }
+            case R.id.traductor:{
+                Toast.makeText(this, "Este es el traductor", Toast.LENGTH_SHORT).show();
+                break;
+            }
+            case R.id.cerrarSesion:{
+                Toast.makeText(this, "Este es cerrar sesion", Toast.LENGTH_SHORT).show();
+                break;
+            }
+        }
+        mDrawerLayout.closeDrawer(GravityCompat.START);
         return false;
     }
 
@@ -159,13 +199,49 @@ public class Translation extends AppCompatActivity implements NavigationView.OnN
         try {
 
 
-            String html= dt.execute(link.getText().toString()).get();
+            String html = dt.execute(link.getText().toString()).get();
+            if(html == ""){
+                Log.d("HTML:", "empty");
+            }else {
+                document = Jsoup.parse(html);
+            }
 
-            document = Jsoup.parse(html);
+            String l = link.getText().toString();
+
+            if(l.contains("bbc.com")){
+                Log.d("ENTRO:", "BBC");
+                nombres = document.select("div.story-body h1, div.story-body__inner p, div.story-body__inner ul li, div.story-body__inner h2, div.story-body__inner figure span img");
+            }
+            else if(l.contains("businessinsider.com")){
+                Log.d("ENTRO:", "Business Insider");
+                nombres = document.select("section.container section h1, section.container section.post-content div figure img, section.container section.post-content div li, section.container section.post-content div p");
+            }
+            else if(l.contains("economist.com")){
+                Log.d("ENTRO:", "The Economist");
+                nombres = document.select("div.main-content__clearfix h1, div.main-content__clearfix img, div.main-content__clearfix p, div.main-content__clearfix h2");
+            }
+            else if(l.contains("elmundo.es")){
+                Log.d("ENTRO:", "El Mundo");
+                nombres = document.select("article div.titles h1, article figure img, article p");
+            }
+            else if(l.contains("cnn.com")){
+                Log.d("ENTRO:", "CNN");
+                nombres = document.select("div.l-container h1, div.l-container div.l-container div p, div.l-container div.l-container div.zn-body__paragraph, div.l-container div.l-container div.zn-body__read-all div.zn-body__paragraph");
+            }
+            else if(l.contains("nacion.com")){
+                Log.d("ENTRO:", "La Nacion");
+                nombres = document.select("div.headline-hed-last, header.article-header p, div.article-body div div figure img, div.article-body-elements div div.row p.element.element-paragraph");
+            }
+            else{
+                Log.d("ADVERTENCIA:", "Paginas compatibles: Business Insider, BBC, El Mundo, The Economist, La Nacion, CNN");
+            }
+
             //BBC: nombres = document.select("div.story-body h1, div.story-body__inner p, div.story-body__inner ul li, div.story-body__inner h2, div.story-body__inner figure span img");
             //The Economist: nombres = document.select("div.main-content__clearfix h1, div.main-content__clearfix img, div.main-content__clearfix p, div.main-content__clearfix h2");
             //El Mundo: nombres = document.select("article div.titles h1, article figure img, article p");
-            //***Arreglar CNN: nombres = document.select("div.l-container h1, section p, section div, div.l-container a, div.l-container img");
+            //CNN: nombres = document.select("div.l-container h1, div.l-container div.l-container div p, div.l-container div.l-container div.zn-body__paragraph, div.l-container div.l-container div.zn-body__read-all div.zn-body__paragraph");
+            //La Nacion: nombres = document.select("div.headline-hed-last, header.article-header p, div.article-body div div figure img, div.article-body-elements div div.row p.element.element-paragraph");
+            //Business Insider: nombres = document.select("section.container section h1, section.container section.post-content div figure img, section.container section.post-content div li, section.container section.post-content div p");
 
             for (int i = 0; i < nombres.size(); i++) {
                  if(nombres.get(i).tagName().equals("img")){
@@ -173,15 +249,11 @@ public class Translation extends AppCompatActivity implements NavigationView.OnN
                      imagenes.add(nombres.get(i).attr("src"));
                  }
 
-
-
                 else {
                     textos.add(nombres.get(i).text());
                     imagenes.add("");
                 }
                 tipos.add(nombres.get(i).tagName());
-                //Log.i("Nombres:", nombres.get(i).tagName());
-
             }
 
             textos= tt.execute(textos).get();

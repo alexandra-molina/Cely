@@ -7,14 +7,6 @@
     android:layout_height="match_parent"
     android:id="@+id/drawer"
     tools:context="com.example.alexandramolina.cely.Translation">
-    <android.support.design.widget.NavigationView
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        app:menu="@menu/nav_menu"
-        android:layout_gravity="left">
-
-
-    </android.support.design.widget.NavigationView>
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -59,7 +51,7 @@
                     android:layout_weight="1"
                     android:ems="20"
                     android:inputType="textPersonName"
-                    android:text="https://edition.cnn.com/2018/04/15/asia/taiwan-us-china-xi-jinping-drills-intl/index.html" />
+                    android:text="http://www.bbc.com/news/science-environment-43804585" />
 
             </LinearLayout>
             <LinearLayout
@@ -105,7 +97,16 @@
 
 
         </LinearLayout>
+
     </RelativeLayout>
 
+    <android.support.design.widget.NavigationView
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        app:menu="@menu/nav_menu"
+        android:layout_gravity="left"
+        android:id="@+id/navigation_view">
+
+    </android.support.design.widget.NavigationView>
 
 </android.support.v4.widget.DrawerLayout>

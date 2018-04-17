@@ -38,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 abrirActivityTraductor();
+                //abrirActivityPrincipal();
             }
         });
     }
@@ -52,6 +53,10 @@ public class MainActivity extends AppCompatActivity {
 
     public void abrirActivityTraductor(){
         Intent intent = new Intent(this, Translation.class);
+        startActivity(intent);
+    }
+    public void abrirActivityPrincipal(){
+        Intent intent = new Intent(this, PrincipalActivity.class);
         startActivity(intent);
     }
 }
