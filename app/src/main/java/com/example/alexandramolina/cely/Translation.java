@@ -125,6 +125,7 @@ public class Translation extends AppCompatActivity implements NavigationView.OnN
         Intent intent = new Intent(Translation.this, NoticiaTraducidaActivity.class);
         intent.putExtra("texto",textos);
         intent.putExtra("tipo",tipos);
+        intent.putExtra("imagen",imagenes);
         startActivity(intent);
     }
 
@@ -161,22 +162,22 @@ public class Translation extends AppCompatActivity implements NavigationView.OnN
             String html= dt.execute(link.getText().toString()).get();
 
             document = Jsoup.parse(html);
-            nombres = document.select("div.story-body h1, div.story-body__inner p, div.story-body__inner ul li, div.story-body__inner h2, div.story-body__inner figure span img");
+            //BBC: nombres = document.select("div.story-body h1, div.story-body__inner p, div.story-body__inner ul li, div.story-body__inner h2, div.story-body__inner figure span img");
+            //The Economist: nombres = document.select("div.main-content__clearfix h1, div.main-content__clearfix img, div.main-content__clearfix p, div.main-content__clearfix h2");
+            //El Mundo: nombres = document.select("article div.titles h1, article figure img, article p");
+            //***Arreglar CNN: nombres = document.select("div.l-container h1, section p, section div, div.l-container a, div.l-container img");
 
             for (int i = 0; i < nombres.size(); i++) {
+                 if(nombres.get(i).tagName().equals("img")){
+                     textos.add("");
+                     imagenes.add(nombres.get(i).attr("src"));
+                 }
 
-                if(nombres.get(i).tagName() == "figure"){
 
-                    textos.add("");
-
-                    if(nombres.get(i).tagName() == "img"){
-                        imagenes.add(nombres.get(i).attr("js-image-replace"));
-                    }
-
-                }
 
                 else {
                     textos.add(nombres.get(i).text());
+                    imagenes.add("");
                 }
                 tipos.add(nombres.get(i).tagName());
                 //Log.i("Nombres:", nombres.get(i).tagName());
@@ -184,10 +185,6 @@ public class Translation extends AppCompatActivity implements NavigationView.OnN
             }
 
             textos= tt.execute(textos).get();
-
-            //for(String s:tipos){
-            //    Log.d("TIPO:",s);
-            //}
 
             abrirActivityTraductor();
 

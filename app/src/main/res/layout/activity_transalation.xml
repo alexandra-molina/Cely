@@ -59,7 +59,7 @@
                     android:layout_weight="1"
                     android:ems="20"
                     android:inputType="textPersonName"
-                    android:text="http://www.bbc.com/news/world-us-canada-43776171 " />
+                    android:text="https://edition.cnn.com/2018/04/15/asia/taiwan-us-china-xi-jinping-drills-intl/index.html" />
 
             </LinearLayout>
             <LinearLayout
