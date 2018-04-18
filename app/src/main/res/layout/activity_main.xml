@@ -26,6 +26,18 @@
             android:text="Ayuda"
             android:textSize="18sp" />
 
+        <TextView
+            android:id="@+id/txt_registrarse"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_gravity="bottom"
+            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="280dp"
+            android:text="Regístrate"
+            android:textColor="@android:color/white"
+            android:textSize="16sp" />
+
         <ImageView
             android:id="@+id/imageView"
             android:layout_width="match_parent"
@@ -87,19 +99,6 @@
             android:layout_marginTop="20dp" />
 
         <TextView
-                android:id="@+id/txt_registrarse"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_gravity="bottom"
-                android:layout_marginBottom="5dp"
-                android:layout_marginLeft="280dp"
-                android:layout_weight="1"
-                android:text="Regístrate"
-                android:textColor="@android:color/white"
-                android:textSize="16sp" />
-
-            <TextView
                 android:id="@+id/textView4"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

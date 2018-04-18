@@ -5,7 +5,7 @@
     android:layout_height="160dp"
     android:orientation="vertical"
     android:background="@drawable/headerbackground"
-    android:padding="20dp">
+    android:padding="15dp">
     <ImageView
         android:src="@drawable/usericon"
         android:layout_width="75dp"
@@ -22,5 +22,11 @@
         android:layout_height="wrap_content"
         android:text="alemoli9715@gmail.com"
         android:textColor="@color/white"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </RelativeLayout>
 
 </LinearLayout>
