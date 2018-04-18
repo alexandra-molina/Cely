@@ -8,31 +8,10 @@
     android:id="@+id/drawer"
     tools:context="com.example.alexandramolina.cely.PrincipalActivity">
 
-    <android.support.design.widget.NavigationView
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        app:menu="@menu/nav_menu"
-        android:layout_gravity="left">
-    </android.support.design.widget.NavigationView>
-
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/background2">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/textView6"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Páginas recomendadas:"
-                android:textAlignment="center"
-                android:textColor="@android:color/background_dark"
-                android:textSize="30sp" />
+        android:background="@drawable/backgroundbienvenido">
 
             <GridLayout
                 android:layout_width="match_parent"
@@ -53,7 +32,7 @@
                     android:id="@+id/imageView3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
+                    android:layout_marginLeft="15dp"
                     android:layout_marginTop="50dp"
                     android:onClick="browserBusinessInsider"
                     app:srcCompat="@drawable/businessinsider" />
@@ -71,7 +50,7 @@
                     android:id="@+id/imageView5"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
+                    android:layout_marginLeft="15dp"
                     android:layout_marginTop="25dp"
                     android:onClick="browserElMundo"
                     app:srcCompat="@drawable/elmundo" />
@@ -89,12 +68,24 @@
                     android:id="@+id/imageView7"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
+                    android:layout_marginLeft="15dp"
                     android:layout_marginTop="25dp"
                     android:onClick="browserEconomist"
                     app:srcCompat="@drawable/theeconomist" />
             </GridLayout>
-        </LinearLayout>
 
     </RelativeLayout>
+
+    <android.support.design.widget.NavigationView
+        app:headerLayout="@layout/header"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        app:menu="@menu/nav_menu"
+        android:layout_gravity="left"
+        android:id="@+id/navigation_view"
+        app:itemTextColor="@color/colorDarkgray"
+        app:itemIconTint="@color/colorDarkgray"
+        >
+
+    </android.support.design.widget.NavigationView>
 </android.support.v4.widget.DrawerLayout>

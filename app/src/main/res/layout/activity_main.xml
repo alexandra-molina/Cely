@@ -11,48 +11,39 @@
         android:layout_height="match_parent"
         android:background="@drawable/background">
 
-
         <TextView
-            android:id="@+id/textView4"
-            android:layout_width="fill_parent"
+            android:id="@+id/txt_ayuda"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_alignStart="@+id/imageView"
-            android:layout_gravity="bottom"
-            android:layout_marginBottom="5dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginEnd="12dp"
+            android:layout_marginTop="12dp"
             android:layout_weight="1"
-            android:text="¿Eres nuevo en Cely?"
-            android:textColor="@android:color/darker_gray"
-            android:textSize="18sp" />
-
-        <TextView
-            android:id="@+id/txt_registrarse"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_gravity="bottom"
-            android:layout_marginBottom="5dp"
-            android:layout_marginLeft="280dp"
-            android:text="Regístrate"
-            android:textColor="@android:color/white"
+            android:clickable="true"
+            android:drawableLeft="@drawable/ic_action_ayuda"
+            android:fontFamily="sans-serif"
+            android:text="Ayuda"
             android:textSize="18sp" />
 
         <ImageView
             android:id="@+id/imageView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
-            app:srcCompat="@drawable/cely_logo"
-            android:layout_marginTop="20dp"/>
+            android:layout_marginTop="20dp"
+            android:layout_weight="1"
+            app:srcCompat="@drawable/cely_logo" />
 
-        <TextView
+        <EditText
             android:id="@+id/txt_usuario"
-            android:layout_width="300dp"
+            android:layout_width="200dp"
             android:layout_height="wrap_content"
             android:layout_below="@+id/imageView"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="16dp"
+            android:layout_weight="1"
             android:background="#11000000"
             android:drawableLeft="@drawable/ic_action_usuario"
             android:fontFamily="sans-serif"
@@ -60,13 +51,14 @@
             android:inputType="textPersonName"
             android:textSize="20sp" />
 
-        <TextView
+        <EditText
             android:id="@+id/txt_contrasena"
-            android:layout_width="300dp"
+            android:layout_width="200dp"
             android:layout_height="wrap_content"
             android:layout_alignStart="@+id/txt_usuario"
             android:layout_below="@+id/txt_usuario"
             android:layout_marginTop="26dp"
+            android:layout_weight="1"
             android:background="#11000000"
             android:drawableLeft="@drawable/ic_action_contrasena"
             android:fontFamily="sans-serif"
@@ -76,29 +68,51 @@
 
         <Button
             android:id="@+id/btn_iniciarSesion"
-            android:backgroundTint="@android:color/darker_gray"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/txt_contrasena"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="30dp"
+            android:layout_weight="1"
+            android:backgroundTint="@android:color/darker_gray"
             android:text="Iniciar Sesión"
             android:textColor="@android:color/white"
-            android:textSize="20sp"/>
+            android:textSize="20sp" />
 
-        <TextView
-            android:id="@+id/txt_ayuda"
+        <com.facebook.login.widget.LoginButton
+            android:id="@+id/login_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginEnd="12dp"
-            android:layout_marginTop="12dp"
-            android:clickable="true"
-            android:text="Ayuda"
-            android:fontFamily="sans-serif"
-            android:drawableLeft="@drawable/ic_action_ayuda"
-            android:textSize="20sp" />
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="20dp" />
+
+        <TextView
+                android:id="@+id/txt_registrarse"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_gravity="bottom"
+                android:layout_marginBottom="5dp"
+                android:layout_marginLeft="280dp"
+                android:layout_weight="1"
+                android:text="Regístrate"
+                android:textColor="@android:color/white"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/textView4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_alignStart="@+id/imageView"
+                android:layout_gravity="bottom"
+                android:layout_marginBottom="5dp"
+                android:layout_marginLeft="10dp"
+                android:layout_weight="1"
+                android:text="¿Eres nuevo en Cely?"
+                android:textColor="@android:color/darker_gray"
+                android:textSize="16sp" />
+
 
     </RelativeLayout>
 </android.support.constraint.ConstraintLayout>
