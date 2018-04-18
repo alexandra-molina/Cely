@@ -91,7 +91,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void iniciarSesion(){
 
-        StringRequest ingredienteRequest = new StringRequest(Request.Method.POST, "https://celytranslator.herokuapp.com/v1/sessions", new Response.Listener<String>() {
+        StringRequest loginRequest = new StringRequest(Request.Method.POST, "https://celytranslator.herokuapp.com/v1/sessions", new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 Log.d("Pruebaaaa",response);
@@ -111,12 +111,12 @@ public class MainActivity extends AppCompatActivity {
             }
         };
         RequestQueue requestQueue = Volley.newRequestQueue(this);
-        requestQueue.add(ingredienteRequest);
+        requestQueue.add(loginRequest);
 
     }
     public void registro(){
 
-        StringRequest ingredienteRequest = new StringRequest(Request.Method.POST, "https://celytranslator.herokuapp.com/v1/registrations", new Response.Listener<String>() {
+        StringRequest registroRequest = new StringRequest(Request.Method.POST, "https://celytranslator.herokuapp.com/v1/registrations", new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 Log.d("Pruebaaaa",response);
@@ -137,7 +137,7 @@ public class MainActivity extends AppCompatActivity {
             }
         };
         RequestQueue requestQueue = Volley.newRequestQueue(this);
-        requestQueue.add(ingredienteRequest);
+        requestQueue.add(registroRequest);
 
     }
 
