@@ -23,7 +23,7 @@
             android:layout_weight="1"
             android:text="¿Eres nuevo en Cely?"
             android:textColor="@android:color/darker_gray"
-            android:textSize="18sp" />
+            android:textSize="16sp" />
 
         <TextView
             android:id="@+id/txt_registrarse"
@@ -35,7 +35,7 @@
             android:layout_marginLeft="280dp"
             android:text="Regístrate"
             android:textColor="@android:color/white"
-            android:textSize="18sp" />
+            android:textSize="16sp" />
 
         <ImageView
             android:id="@+id/imageView"
