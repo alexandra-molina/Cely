@@ -10,7 +10,8 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@drawable/background">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -20,13 +21,13 @@
 
             <TextView
                 android:id="@+id/txtConvertidor"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Convertidor"
-                android:layout_gravity="center_vertical"
+                android:layout_gravity="center"
                 android:layout_marginTop="8dp"
-                android:layout_marginLeft="8dp"
-                android:textSize="30sp"/>
+                android:text="Convertidor"
+                android:fontFamily="sans-serif"
+                android:textSize="28sp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -39,10 +40,11 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="3"
-                    android:text="Link:"
+                    android:fontFamily="sans-serif"
                     android:gravity="left"
-                    android:textSize="20dp"
-                    android:padding="10dp" />
+                    android:padding="10dp"
+                    android:text="Link:"
+                    android:textSize="18sp" />
 
                 <EditText
                     android:id="@+id/link"
@@ -51,9 +53,11 @@
                     android:layout_weight="1"
                     android:ems="20"
                     android:inputType="textPersonName"
+                    android:textSize="14sp"
                     android:text="http://www.bbc.com/news/science-environment-43804585" />
 
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -65,10 +69,11 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="3"
-                    android:text="Idioma:"
                     android:gravity="left"
-                    android:textSize="20dp"
-                    android:padding="10dp"/>
+                    android:fontFamily="sans-serif"
+                    android:padding="10dp"
+                    android:text="Idioma:"
+                    android:textSize="18sp" />
 
                 <Spinner
                     android:id="@+id/spinner"
@@ -77,23 +82,20 @@
                     android:layout_weight="1" />
 
             </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
+
+            <Button
+                android:id="@+id/btnTraducir"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginTop="30dp">
+                android:layout_gravity="center"
+                android:padding="10dp"
+                android:layout_marginTop="200dp"
+                android:onClick="translate"
+                android:text="Traducir"
+                android:backgroundTint="@android:color/darker_gray"
+                android:textSize="20sp"
+                android:textColor="@android:color/white"/>
 
-
-                <Button
-                    android:id="@+id/btnTraducir"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:padding="10dp"
-                    android:layout_marginTop="200dp"
-                    android:onClick="translate"
-                    android:text="Traducir" />
-            </LinearLayout>
 
 
         </LinearLayout>
@@ -101,11 +103,14 @@
     </RelativeLayout>
 
     <android.support.design.widget.NavigationView
+        app:headerLayout="@layout/header"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         app:menu="@menu/nav_menu"
         android:layout_gravity="left"
-        android:id="@+id/navigation_view">
+        android:id="@+id/navigation_view"
+        app:itemTextColor="@color/colorDarkgray"
+        app:itemIconTint="@color/colorDarkgray">
 
     </android.support.design.widget.NavigationView>
 

@@ -11,20 +11,20 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.widget.Toast;
 
-public class UsuarioActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
+public class BienvenidoActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
 
     ActionBar actionBar;
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mToggle;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_usuario);
+        setContentView(R.layout.activity_bienvenido);
 
         setNavigationViewListner();
 
@@ -37,6 +37,7 @@ public class UsuarioActivity extends AppCompatActivity implements NavigationView
         mToggle.syncState();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
+
     private void setNavigationViewListner(){
         NavigationView navigationView = findViewById(R.id.navigation_view);
         navigationView.setNavigationItemSelectedListener(this);

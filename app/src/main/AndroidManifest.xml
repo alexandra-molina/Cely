@@ -26,16 +26,14 @@
         <activity android:name=".RegistrarseActivity" />
         <activity android:name=".Translation" />
         <activity android:name=".UsuarioActivity" />
-        <activity
-            android:name=".NotasActivity"
-            android:label="@string/title_activity_notas"
-            android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".PaginasActivity" />
         <activity android:name=".NoticiasActivity" />
         <activity android:name=".TraductorActivity" />
         <activity android:name=".PalabraActivity" />
         <activity android:name=".NoticiaTraducidaActivity" />
-        <activity android:name=".PrincipalActivity"></activity>
+        <activity android:name=".PrincipalActivity" />
+        <activity android:name=".BienvenidoActivity" />
+        <activity android:name=".ArchivosActivity"></activity>
     </application>
 
 </manifest>

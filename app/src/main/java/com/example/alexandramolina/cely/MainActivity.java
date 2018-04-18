@@ -1,6 +1,9 @@
 package com.example.alexandramolina.cely;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -13,10 +16,15 @@ public class MainActivity extends AppCompatActivity {
     private TextView txt_registarse;
     private Button btn_iniciarSesion;
 
+    ActionBar actionBar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        actionBar = getSupportActionBar();
+        actionBar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#233a62")));
 
         txt_ayuda = findViewById(R.id.txt_ayuda);
         txt_registarse = findViewById(R.id.txt_registrarse);
@@ -37,8 +45,9 @@ public class MainActivity extends AppCompatActivity {
         btn_iniciarSesion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                abrirActivityTraductor();
+                //abrirActivityTraductor();
                 //abrirActivityPrincipal();
+                abrirActivityBienvenido();
             }
         });
     }
@@ -57,6 +66,10 @@ public class MainActivity extends AppCompatActivity {
     }
     public void abrirActivityPrincipal(){
         Intent intent = new Intent(this, PrincipalActivity.class);
+        startActivity(intent);
+    }
+    public void abrirActivityBienvenido(){
+        Intent intent = new Intent(this, BienvenidoActivity.class);
         startActivity(intent);
     }
 }

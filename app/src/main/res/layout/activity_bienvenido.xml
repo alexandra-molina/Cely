@@ -6,30 +6,21 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/drawer"
-    tools:context="com.example.alexandramolina.cely.UsuarioActivity">
-
+    tools:context="com.example.alexandramolina.cely.BienvenidoActivity">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/background">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/textView9"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:fontFamily="sans-serif"
-                android:gravity="center"
-                android:text="Usuario"
-                android:textSize="28sp" />
-        </LinearLayout>
-
+        <TextView
+            android:id="@+id/textView7"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="BIENVENIDO A CELY"
+            android:textSize="50sp"
+            android:gravity="center"
+            android:layout_marginTop="100dp"/>
     </RelativeLayout>
 
     <android.support.design.widget.NavigationView

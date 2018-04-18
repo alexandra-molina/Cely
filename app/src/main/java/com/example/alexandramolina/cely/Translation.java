@@ -1,11 +1,14 @@
 package com.example.alexandramolina.cely;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -58,6 +61,7 @@ public class Translation extends AppCompatActivity implements NavigationView.OnN
     private EditText link;
     private ArrayList<String> tipos = new ArrayList<>();
     private ArrayList<String> imagenes = new ArrayList<>();
+    ActionBar actionBar;
 
 
     @Override
@@ -66,6 +70,9 @@ public class Translation extends AppCompatActivity implements NavigationView.OnN
         setContentView(R.layout.activity_transalation);
 
         setNavigationViewListner();
+
+        actionBar = getSupportActionBar();
+        actionBar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#233a62")));
 
         btn_traducir = findViewById(R.id.btnTraducir);
         txt_link = findViewById(R.id.link);
@@ -154,30 +161,34 @@ public class Translation extends AppCompatActivity implements NavigationView.OnN
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
-        Log.d("SI","si");
-
         switch(item.getItemId()){
             case R.id.convertidor:{
+                abrirActivityConvertidor();
                 Toast.makeText(this, "Este es el convertidor", Toast.LENGTH_SHORT).show();
                 break;
             }
             case R.id.usuario:{
+                abrirActivityUsuario();
                 Toast.makeText(this, "Este es el usuario", Toast.LENGTH_SHORT).show();
                 break;
             }
             case R.id.archivos:{
+                abrirActivityArchivos();
                 Toast.makeText(this, "Estas son los archivos", Toast.LENGTH_SHORT).show();
                 break;
             }
             case R.id.paginasSugeridas:{
+                abrirActivityPrincipal();
                 Toast.makeText(this, "Estas son las paginas sugeridas", Toast.LENGTH_SHORT).show();
                 break;
             }
             case R.id.noticias:{
+                abrirActivityNoticias();
                 Toast.makeText(this, "Estas son las noticias", Toast.LENGTH_SHORT).show();
                 break;
             }
             case R.id.traductor:{
+                abrirActivityPalabra();
                 Toast.makeText(this, "Este es el traductor", Toast.LENGTH_SHORT).show();
                 break;
             }
@@ -188,6 +199,32 @@ public class Translation extends AppCompatActivity implements NavigationView.OnN
         }
         mDrawerLayout.closeDrawer(GravityCompat.START);
         return false;
+    }
+    public void abrirActivityConvertidor(){
+        Intent intent = new Intent(this, Translation.class);
+        startActivity(intent);
+    }
+
+    public void abrirActivityPrincipal(){
+        Intent intent = new Intent(this, PrincipalActivity.class);
+        startActivity(intent);
+    }
+
+    public void abrirActivityUsuario(){
+        Intent intent = new Intent(this, UsuarioActivity.class);
+        startActivity(intent);
+    }
+    public void abrirActivityArchivos(){
+        Intent intent = new Intent(this, ArchivosActivity.class);
+        startActivity(intent);
+    }
+    public void abrirActivityNoticias(){
+        Intent intent = new Intent(this, NoticiasActivity.class);
+        startActivity(intent);
+    }
+    public void abrirActivityPalabra(){
+        Intent intent = new Intent(this, PalabraActivity.class);
+        startActivity(intent);
     }
 
     public void traducir(){

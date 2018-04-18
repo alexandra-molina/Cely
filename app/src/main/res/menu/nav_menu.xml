@@ -1,31 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:id="@+id/usuario"
-        android:title="Usuario">
+        android:title="Usuario"
+        android:icon="@drawable/ic_action_usuario">
     </item>
+
     <item android:id="@+id/convertidor"
-        android:title="Convertidor">
-
+        android:title="Convertidor"
+        android:icon="@drawable/ic_action_convertidor">
     </item>
+
     <item android:id="@+id/archivos"
-        android:title="Mis Archivos">
+        android:title="Mis Archivos"
+        android:icon="@drawable/ic_action_archivos">
 
     </item>
+
     <item android:id="@+id/paginasSugeridas"
-        android:title="Páginas Sugeridas">
+        android:title="Páginas Sugeridas"
+        android:icon="@drawable/ic_action_paginas">
 
     </item>
 
     <item android:id="@+id/noticias"
-        android:title="Noticias Sugeridas">
+        android:title="Noticias Sugeridas"
+        android:icon="@drawable/ic_action_noticias">
 
     </item>
+
     <item android:id="@+id/traductor"
-        android:title="Traductor">
+        android:title="Traductor"
+        android:icon="@drawable/ic_action_traductor">
 
     </item>
+
     <item android:id="@+id/cerrarSesion"
-        android:title="Cerrar Sesión">
+        android:title="Cerrar Sesión"
+        android:icon="@drawable/ic_action_cerrarsesion">
 
     </item>
 

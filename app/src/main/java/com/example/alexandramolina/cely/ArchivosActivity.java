@@ -1,6 +1,7 @@
 package com.example.alexandramolina.cely;
 
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.support.annotation.NonNull;
@@ -14,17 +15,16 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.Toast;
 
-public class UsuarioActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
+public class ArchivosActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
 
     ActionBar actionBar;
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mToggle;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_usuario);
+        setContentView(R.layout.activity_archivos);
 
         setNavigationViewListner();
 
@@ -35,8 +35,8 @@ public class UsuarioActivity extends AppCompatActivity implements NavigationView
         mToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.open, R.string.close);
         mDrawerLayout.addDrawerListener(mToggle);
         mToggle.syncState();
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
+
     private void setNavigationViewListner(){
         NavigationView navigationView = findViewById(R.id.navigation_view);
         navigationView.setNavigationItemSelectedListener(this);
