@@ -13,23 +13,6 @@
         android:layout_height="match_parent"
         android:background="@drawable/background">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/textView7"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
-                android:layout_centerHorizontal="true"
-                android:gravity="center"
-                android:layout_marginTop="16dp"
-                android:fontFamily="sans-serif"
-                android:text="Archivos"
-                android:textSize="28sp" />
-        </LinearLayout>
 
     </RelativeLayout>
 
@@ -43,6 +26,7 @@
         app:itemTextColor="@color/colorDarkgray"
         app:itemIconTint="@color/colorDarkgray"
         >
+
     </android.support.design.widget.NavigationView>
 
 </android.support.v4.widget.DrawerLayout>

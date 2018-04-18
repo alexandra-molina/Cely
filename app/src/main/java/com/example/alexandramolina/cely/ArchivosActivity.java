@@ -35,6 +35,7 @@ public class ArchivosActivity extends AppCompatActivity implements NavigationVie
         mToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.open, R.string.close);
         mDrawerLayout.addDrawerListener(mToggle);
         mToggle.syncState();
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     private void setNavigationViewListner(){
@@ -58,36 +59,36 @@ public class ArchivosActivity extends AppCompatActivity implements NavigationVie
         switch(item.getItemId()){
             case R.id.convertidor:{
                 abrirActivityConvertidor();
-                Toast.makeText(this, "Este es el convertidor", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Convertidor", Toast.LENGTH_SHORT).show();
                 break;
             }
             case R.id.usuario:{
                 abrirActivityUsuario();
-                Toast.makeText(this, "Este es el usuario", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Usuario", Toast.LENGTH_SHORT).show();
                 break;
             }
             case R.id.archivos:{
                 abrirActivityArchivos();
-                Toast.makeText(this, "Estas son los archivos", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Archivos", Toast.LENGTH_SHORT).show();
                 break;
             }
             case R.id.paginasSugeridas:{
                 abrirActivityPrincipal();
-                Toast.makeText(this, "Estas son las paginas sugeridas", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Paginas sugeridas", Toast.LENGTH_SHORT).show();
                 break;
             }
             case R.id.noticias:{
                 abrirActivityNoticias();
-                Toast.makeText(this, "Estas son las noticias", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Noticias", Toast.LENGTH_SHORT).show();
                 break;
             }
             case R.id.traductor:{
                 abrirActivityPalabra();
-                Toast.makeText(this, "Este es el traductor", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Traductor", Toast.LENGTH_SHORT).show();
                 break;
             }
             case R.id.cerrarSesion:{
-                Toast.makeText(this, "Este es cerrar sesion", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Cerrar sesion", Toast.LENGTH_SHORT).show();
                 break;
             }
         }
