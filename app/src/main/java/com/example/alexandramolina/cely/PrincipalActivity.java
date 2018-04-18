@@ -110,7 +110,7 @@ public class PrincipalActivity extends AppCompatActivity implements NavigationVi
                 break;
             }
             case R.id.traductor:{
-                abrirActivityPalabra();
+                abrirActivityTraductor();
                 Toast.makeText(this, "Traductor", Toast.LENGTH_SHORT).show();
                 break;
             }
@@ -144,8 +144,8 @@ public class PrincipalActivity extends AppCompatActivity implements NavigationVi
         Intent intent = new Intent(this, NoticiasActivity.class);
         startActivity(intent);
     }
-    public void abrirActivityPalabra(){
-        Intent intent = new Intent(this, PalabraActivity.class);
+    public void abrirActivityTraductor(){
+        Intent intent = new Intent(this, TraductorActivity.class);
         startActivity(intent);
     }
 }

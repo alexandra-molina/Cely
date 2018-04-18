@@ -188,7 +188,7 @@ public class Translation extends AppCompatActivity implements NavigationView.OnN
                 break;
             }
             case R.id.traductor:{
-                abrirActivityPalabra();
+                abrirActivityTraductor2();
                 Toast.makeText(this, "Este es el traductor", Toast.LENGTH_SHORT).show();
                 break;
             }
@@ -222,8 +222,8 @@ public class Translation extends AppCompatActivity implements NavigationView.OnN
         Intent intent = new Intent(this, NoticiasActivity.class);
         startActivity(intent);
     }
-    public void abrirActivityPalabra(){
-        Intent intent = new Intent(this, PalabraActivity.class);
+    public void abrirActivityTraductor2(){
+        Intent intent = new Intent(this, TraductorActivity.class);
         startActivity(intent);
     }
 
