@@ -208,11 +208,6 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, PrincipalActivity.class);
         startActivity(intent);
     }
-    public void abrirActivityBienvenido(){
-
-        Intent intent = new Intent(this, BienvenidoActivity.class);
-        startActivity(intent);
-    }
 
     public void iniciarSesion(){
 

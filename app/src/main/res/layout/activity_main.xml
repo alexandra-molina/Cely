@@ -84,7 +84,7 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="39dp"
             android:layout_weight="1"
-            android:backgroundTint="@android:color/darker_gray"
+            android:backgroundTint="@color/blue"
             android:text="Iniciar Sesión"
             android:textColor="@android:color/white"
             android:textSize="16sp" />

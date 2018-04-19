@@ -6,29 +6,39 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/drawer"
-    tools:context="com.example.alexandramolina.cely.NotasActivity">
+    tools:context="com.example.alexandramolina.cely.BuscarNoticiaActivity">
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@drawable/background">
+        android:layout_height="match_parent">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/textView7"
+            <EditText
+                android:id="@+id/word"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
-                android:layout_centerHorizontal="true"
-                android:gravity="center"
-                android:layout_marginTop="16dp"
-                android:fontFamily="sans-serif"
-                android:text="Archivos"
-                android:textSize="28sp" />
+                android:hint="Ingresa una palabra clave"
+                android:drawableLeft="@drawable/ic_action_buscarpalabra"
+                />
+
+            <Button
+                android:id="@+id/buscar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Buscar"
+                android:textColor="@color/white"
+                android:backgroundTint="@color/blue"
+                android:onClick="buscarNoticia"/>
+
+            <GridView
+                android:id="@+id/gridView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:numColumns="1"/>
         </LinearLayout>
 
     </RelativeLayout>

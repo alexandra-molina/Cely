@@ -10,6 +10,12 @@
         android:icon="@drawable/ic_action_convertidor">
     </item>
 
+    <item android:id="@+id/traductor"
+        android:title="Traductor"
+        android:icon="@drawable/ic_action_traductor">
+
+    </item>
+
     <item android:id="@+id/archivos"
         android:title="Mis Archivos"
         android:icon="@drawable/ic_action_archivos">
@@ -28,9 +34,14 @@
 
     </item>
 
-    <item android:id="@+id/traductor"
-        android:title="Traductor"
-        android:icon="@drawable/ic_action_traductor">
+    <item android:id="@+id/noticiaPais"
+        android:title="Noticias en mi ubicación"
+        android:icon="@drawable/ic_action_pais">
+
+    </item>
+    <item android:id="@+id/noticiaBuscar"
+        android:title="Buscar noticias"
+        android:icon="@drawable/ic_action_buscar">
 
     </item>
 

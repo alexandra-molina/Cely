@@ -89,11 +89,10 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:padding="10dp"
-                android:layout_marginTop="200dp"
                 android:onClick="translate"
                 android:text="Traducir"
-                android:backgroundTint="@android:color/darker_gray"
-                android:textSize="20sp"
+                android:backgroundTint="@color/blue"
+                android:textSize="14sp"
                 android:textColor="@android:color/white"/>
 
 
