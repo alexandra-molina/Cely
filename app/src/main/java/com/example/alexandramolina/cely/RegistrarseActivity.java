@@ -35,7 +35,7 @@ public class RegistrarseActivity extends AppCompatActivity {
     Button btnCrearUsuario;
     String usuario;
     String password;
-    String name;
+    String email;
     AwesomeValidation awesomeValidation;
     SharedPreferences sharedPreferences;
 
@@ -67,7 +67,7 @@ public class RegistrarseActivity extends AppCompatActivity {
                 if(awesomeValidation.validate()){
                     usuario=txtUsuario.getText().toString();
                     password=txtPassword.getText().toString();
-
+                    email= txtEmail.getText().toString();
                     registro();
 
 
@@ -107,7 +107,7 @@ public class RegistrarseActivity extends AppCompatActivity {
                         sharedPreferences.edit().putString("authentication_token", authentication_token).apply();
                         sharedPreferences.edit().putString("id", id).apply();
                         sharedPreferences.edit().putString("email", email).apply();
-                        sharedPreferences.edit().putString("name", name).apply();
+                        sharedPreferences.edit().putString("name", usuario).apply();
                         abrirActivityPrincipal();
                     }
                     else {
@@ -128,9 +128,11 @@ public class RegistrarseActivity extends AppCompatActivity {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<String, String>();
-                params.put("email",usuario);
+                params.put("email",email);
                 params.put("password",password);
-                params.put("name",name);
+
+                params.put("name",usuario);
+
                 return params;
             }
         };
