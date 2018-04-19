@@ -84,9 +84,7 @@ public class MainActivity extends AppCompatActivity {
         txtContrasena = findViewById(R.id.txt_contrasena);
         btn_iniciarSesion = findViewById(R.id.btn_iniciarSesion);
 
-        txtBirthday = findViewById(R.id.txtBirthday);
-        txtEmail = findViewById(R.id.txtEmail2);
-        imgAvatar = findViewById(R.id.avatar);
+
 
         txt_ayuda.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -151,7 +149,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         if(AccessToken.getCurrentAccessToken() != null){
-            txtEmail.setText(AccessToken.getCurrentAccessToken().getUserId());
+            //txtEmail.setText(AccessToken.getCurrentAccessToken().getUserId());
         }
     }
 
