@@ -192,7 +192,7 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
     public void abrirActivityRegistrase(){
-        registro();
+
         Intent intent = new Intent(this, RegistrarseActivity.class);
         startActivity(intent);
     }
@@ -264,32 +264,8 @@ public class MainActivity extends AppCompatActivity {
         requestQueue.add(loginRequest);
 
     }
-    public void registro(){
 
-        StringRequest registroRequest = new StringRequest(Request.Method.POST, "https://celytranslate.herokuapp.com/v1/registrations", new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                Log.d("Pruebaaaa",response);
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Toast.makeText(getApplicationContext(), "Error", Toast.LENGTH_SHORT).show();
-            }
-        }){
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String> params = new HashMap<String, String>();
-                params.put("email","andrem.san12@gmail.com");
-                params.put("password","1234756");
-                params.put("name","La trucha");
-                return params;
-            }
-        };
-        RequestQueue requestQueue = Volley.newRequestQueue(this);
-        requestQueue.add(registroRequest);
-
-    }
+        
 
 
 }
