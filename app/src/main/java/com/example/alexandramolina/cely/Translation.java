@@ -1,6 +1,8 @@
 package com.example.alexandramolina.cely;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
@@ -27,10 +29,19 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.google.cloud.translate.Translate;
 import com.google.cloud.translate.TranslateOptions;
 
 
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
@@ -44,6 +55,8 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
 
@@ -62,6 +75,9 @@ public class Translation extends AppCompatActivity implements NavigationView.OnN
     private ArrayList<String> tipos = new ArrayList<>();
     private ArrayList<String> imagenes = new ArrayList<>();
     ActionBar actionBar;
+    SharedPreferences sharedPreferences;
+    String authentication_token;
+    String id_usuario;
 
 
     @Override
@@ -140,7 +156,9 @@ public class Translation extends AppCompatActivity implements NavigationView.OnN
 
 
     public void translate(View view){
+
         traducir();
+
     }
 
     private void setNavigationViewListner(){
@@ -295,6 +313,10 @@ public class Translation extends AppCompatActivity implements NavigationView.OnN
 
             textos= tt.execute(textos).get();
 
+            sharedPreferences = getSharedPreferences("com.example.alexandramolina.cely", Context.MODE_PRIVATE);
+            id_usuario = sharedPreferences.getString("i", "");
+            authentication_token = sharedPreferences.getString("authentication_token", "");
+
             abrirActivityTraductor();
 
 
@@ -402,6 +424,59 @@ public class Translation extends AppCompatActivity implements NavigationView.OnN
 
             return null;
         }
+
+    }
+    public void crearNoticia(){
+
+        StringRequest noticiaRequest = new StringRequest(Request.Method.POST, "https://celytranslate.herokuapp.com/v1/noticias", new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                JSONObject json = null;
+
+                String id="";
+                String status="";
+                String message="";
+                String authentication_token="";
+                try {
+                    json = new JSONObject(response);
+                    status=json.getString("status");
+                    message=json.getString("message");
+                    if(status.equals("Success")){
+                        JSONObject main = new JSONObject(json.getString("data"));
+                        id = main.getString("id");
+                        authentication_token = main.getString("authentication_token");
+                        sharedPreferences = getSharedPreferences("com.example.alexandramolina.cely", Context.MODE_PRIVATE);
+                        sharedPreferences.edit().putString("authentication_token", authentication_token).apply();
+                        sharedPreferences.edit().putString("id", id).apply();
+
+                        abrirActivityPrincipal();
+                    }
+                    else {
+                        Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
+                        Log.d("ERROR",message);
+                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(getApplicationContext(), "Error", Toast.LENGTH_SHORT).show();
+            }
+        }){
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("id",id_usuario);
+                params.put("authentication_token",authentication_token);
+                params.put("title","");
+                return params;
+            }
+        };
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(noticiaRequest);
 
     }
 }
