@@ -1,6 +1,8 @@
 package com.example.alexandramolina.cely;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
@@ -15,6 +17,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class PrincipalActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
@@ -22,6 +25,8 @@ public class PrincipalActivity extends AppCompatActivity implements NavigationVi
     ActionBar actionBar;
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mToggle;
+    SharedPreferences sharedPreferences;
+    NavigationView nv;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +34,9 @@ public class PrincipalActivity extends AppCompatActivity implements NavigationVi
         setContentView(R.layout.activity_principal);
 
         setNavigationViewListner();
+        nv=findViewById(R.id.navigation_view);
+
+
 
         actionBar = getSupportActionBar();
         actionBar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#233a62")));
@@ -38,6 +46,9 @@ public class PrincipalActivity extends AppCompatActivity implements NavigationVi
         mDrawerLayout.addDrawerListener(mToggle);
         mToggle.syncState();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        setHeader();
+
     }
 
     public void browserBBC(View view){
@@ -68,6 +79,16 @@ public class PrincipalActivity extends AppCompatActivity implements NavigationVi
     private void setNavigationViewListner(){
         NavigationView navigationView = findViewById(R.id.navigation_view);
         navigationView.setNavigationItemSelectedListener(this);
+    }
+    private void setHeader(){
+        sharedPreferences = getSharedPreferences("com.example.alexandramolina.cely", Context.MODE_PRIVATE);
+        String email = sharedPreferences.getString("email", "");
+        String name = sharedPreferences.getString("name", "");
+        View header = nv.getHeaderView(0);
+        TextView headerEmail =  header.findViewById(R.id.headerEmail);
+        TextView headerName =  header.findViewById(R.id.headerName);
+        headerEmail.setText(email);
+        headerName.setText(name);
     }
 
 

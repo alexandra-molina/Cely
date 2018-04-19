@@ -32,8 +32,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_gravity="bottom"
-            android:layout_marginBottom="5dp"
-            android:layout_marginLeft="280dp"
+            android:layout_toEndOf="@+id/textView4"
             android:text="Regístrate"
             android:textColor="@android:color/white"
             android:textSize="16sp" />
@@ -100,18 +99,17 @@
             android:layout_weight="1" />
 
         <TextView
-                android:id="@+id/textView4"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_alignStart="@+id/imageView"
-                android:layout_gravity="bottom"
-                android:layout_marginBottom="5dp"
-                android:layout_marginLeft="10dp"
-                android:layout_weight="1"
-                android:text="¿Eres nuevo en Cely?"
-                android:textColor="@android:color/darker_gray"
-                android:textSize="16sp" />
+            android:id="@+id/textView4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/txt_registrarse"
+            android:layout_alignBottom="@+id/txt_registrarse"
+            android:layout_alignEnd="@+id/btn_iniciarSesion"
+            android:layout_gravity="bottom"
+            android:layout_weight="1"
+            android:text="¿Eres nuevo en Cely?"
+            android:textColor="@android:color/darker_gray"
+            android:textSize="16sp" />
 
 
     </RelativeLayout>
