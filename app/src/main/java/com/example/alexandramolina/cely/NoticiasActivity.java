@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
@@ -17,6 +18,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.TextView;
@@ -49,6 +51,7 @@ public class NoticiasActivity extends AppCompatActivity implements NavigationVie
     private ActionBarDrawerToggle mToggle;
     SharedPreferences sharedPreferences;
     NavigationView nv;
+    String page = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -217,6 +220,20 @@ public class NoticiasActivity extends AppCompatActivity implements NavigationVie
 
         adapter = new NewsAdapter(this, R.layout.newslistview,news);
         gridView3.setAdapter(adapter);
+        gridView3.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                page = news.get(i).getLink();
+                browser();
+            }
+        });
+
+
+    }
+
+    public void browser(){
+        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(page));
+        startActivity(browserIntent);
     }
 
     public class DownloadTask extends AsyncTask<String, Void, String> {

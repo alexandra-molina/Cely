@@ -12,6 +12,7 @@ import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
@@ -25,6 +26,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.TextView;
@@ -61,6 +63,7 @@ public class GPSActivity extends AppCompatActivity implements NavigationView.OnN
     NewsAdapter adapter;
     GridView gridView2;
     String codigo = "US";
+    String page = "";
 
     ActionBar actionBar;
     private DrawerLayout mDrawerLayout;
@@ -194,6 +197,17 @@ public class GPSActivity extends AppCompatActivity implements NavigationView.OnN
 
         adapter = new NewsAdapter(this, R.layout.newslistview,news);
         gridView2.setAdapter(adapter);
+        gridView2.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                page = news.get(i).getLink();
+                browser();
+            }
+        });
+    }
+    public void browser(){
+        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(page));
+        startActivity(browserIntent);
     }
 
     public class DownloadTask extends AsyncTask<String, Void, String> {
