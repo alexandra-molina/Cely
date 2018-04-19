@@ -6,19 +6,28 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/drawer"
-    tools:context="com.example.alexandramolina.cely.NoticiasActivity">
+    tools:context="com.example.alexandramolina.cely.GPSActivity">
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/background">
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/placeName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="TextView"
+            android:textSize="30dp"
+            android:gravity="center"
+            android:layout_marginBottom="10dp"/>
 
         <GridView
-            android:id="@+id/gridView3"
+            android:id="@+id/gridView2"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:numColumns="1"/>
-    </RelativeLayout>
+            android:numColumns="1" />
+    </LinearLayout>
 
     <android.support.design.widget.NavigationView
         app:headerLayout="@layout/header"
@@ -32,5 +41,4 @@
         >
 
     </android.support.design.widget.NavigationView>
-
 </android.support.v4.widget.DrawerLayout>

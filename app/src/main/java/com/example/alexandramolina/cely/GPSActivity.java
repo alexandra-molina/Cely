@@ -1,15 +1,21 @@
 package com.example.alexandramolina.cely;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.location.Address;
+import android.location.Geocoder;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
@@ -24,14 +30,6 @@ import android.widget.GridView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android.volley.AuthFailureError;
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
-import com.google.api.client.json.Json;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -44,22 +42,25 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.List;
 import java.util.concurrent.ExecutionException;
 
-public class BuscarNoticiaActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
+public class GPSActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
 
-    String linkP1 = "https://newsapi.org/v2/top-headlines?q=";
+
+    LocationManager locationManager;
+    LocationListener locationListener;
+    TextView placeName;
+    Location lastLocation;
+    String linkP1 = "https://newsapi.org/v2/top-headlines?country=";
     String apiKey = "&apiKey=6ea91d289e6e4e53adb8eec7b039bc97";
     String linkP = "";
-    EditText word;
     String l = "";
     ArrayList<News> news = new ArrayList<>();
-    DownloadTask downloadTask;
-    ImageDownloadTask imageDownloadTask;
+    GPSActivity.DownloadTask downloadTask;
     NewsAdapter adapter;
-    GridView gridView;
+    GridView gridView2;
+    String codigo = "US";
 
     ActionBar actionBar;
     private DrawerLayout mDrawerLayout;
@@ -70,16 +71,45 @@ public class BuscarNoticiaActivity extends AppCompatActivity implements Navigati
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_buscar_noticia);
+        setContentView(R.layout.activity_gps);
 
-        gridView = findViewById(R.id.gridView);
+        placeName = findViewById(R.id.placeName);
+        gridView2 = findViewById(R.id.gridView2);
 
-        String link;
-        String image;
-        String title;
+        locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
+        locationListener = new LocationListener() {
+            @Override
+            public void onLocationChanged(Location location) {
 
-        word = findViewById(R.id.word);
+            }
 
+            @Override
+            public void onStatusChanged(String s, int i, Bundle bundle) {
+
+            }
+
+            @Override
+            public void onProviderEnabled(String s) {
+
+            }
+
+            @Override
+            public void onProviderDisabled(String s) {
+
+            }
+        };
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{ Manifest.permission.ACCESS_FINE_LOCATION }, 0);
+        }
+        else {
+            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
+
+            lastLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+
+            Country();
+
+        }
+        buscarNoticia();
         setNavigationViewListner();
         nv=findViewById(R.id.navigation_view);
 
@@ -97,12 +127,50 @@ public class BuscarNoticiaActivity extends AppCompatActivity implements Navigati
         setHeader();
 
     }
+    public void Country() {
+        String pais = null;
+        LocationManager lm = (LocationManager)getApplicationContext().getSystemService(Context.LOCATION_SERVICE);
+        Geocoder geocoder = new Geocoder(getApplicationContext());
+        for(String provider: lm.getAllProviders()) {
+            @SuppressWarnings("ResourceType") Location location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+            if(location!=null) {
+                try {
+                    List<Address> addresses = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
+                    Log.d("ADRESSES:",addresses.toString());
+                    if(addresses != null && addresses.size() > 0) {
+                        pais = addresses.get(0).getCountryName();
+                        codigo = addresses.get(0).getCountryCode();
+                        Log.d("CODIGO:", codigo);
+                        placeName.setText(pais);
+                        break;
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        Toast.makeText(getApplicationContext(), pais, Toast.LENGTH_LONG).show();
+    }
 
-    public void buscarNoticia(View view){
-        linkP = word.getText().toString();
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        if (requestCode == 0) {
+
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+
+                if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+                    locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
+                }
+            }
+
+        }
+    }
+    public void buscarNoticia(){
+        linkP = codigo.toLowerCase();
         l = linkP1+linkP+apiKey;
-        downloadTask = new DownloadTask();
-        imageDownloadTask = new ImageDownloadTask();
+        downloadTask = new GPSActivity.DownloadTask();
         try {
 
             JSONObject jsonObject = new JSONObject(downloadTask.execute(l).get());
@@ -125,7 +193,7 @@ public class BuscarNoticiaActivity extends AppCompatActivity implements Navigati
         }
 
         adapter = new NewsAdapter(this, R.layout.newslistview,news);
-        gridView.setAdapter(adapter);
+        gridView2.setAdapter(adapter);
     }
 
     public class DownloadTask extends AsyncTask<String, Void, String> {
@@ -182,40 +250,6 @@ public class BuscarNoticiaActivity extends AppCompatActivity implements Navigati
 
 
         }
-    }
-    public class ImageDownloadTask extends AsyncTask<String, Void, Bitmap> {
-
-        @Override
-        protected Bitmap doInBackground(String... urls) {
-
-
-            try {
-                URL url = new URL(urls[0]);
-                HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
-
-                httpURLConnection.connect();
-
-                InputStream inputStream = httpURLConnection.getInputStream();
-
-                Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
-
-                return bitmap;
-
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-            return null;
-        }
-        @Override
-        protected void onPostExecute(Bitmap result) {
-            super.onPostExecute(result);
-
-
-        }
-
     }
     private void setNavigationViewListner(){
         NavigationView navigationView = findViewById(R.id.navigation_view);

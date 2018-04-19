@@ -1,6 +1,8 @@
 package com.example.alexandramolina.cely;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
@@ -47,6 +49,9 @@ public class TraductorActivity extends AppCompatActivity implements NavigationVi
     private Spinner spinner;
     private String idioma ="spa";
     private TraductorActivity.TranslationTaskWord tt;
+    SharedPreferences sharedPreferences;
+    NavigationView nv;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +59,7 @@ public class TraductorActivity extends AppCompatActivity implements NavigationVi
         setContentView(R.layout.activity_traductor);
 
         setNavigationViewListner();
+        nv=findViewById(R.id.navigation_view);
 
         txtPalabra = findViewById(R.id.palabra);
         txtPalabraTraducida = findViewById(R.id.palabraTraducida);
@@ -67,6 +73,8 @@ public class TraductorActivity extends AppCompatActivity implements NavigationVi
         mDrawerLayout.addDrawerListener(mToggle);
         mToggle.syncState();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        setHeader();
 
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.Idiomas, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -118,6 +126,17 @@ public class TraductorActivity extends AppCompatActivity implements NavigationVi
         navigationView.setNavigationItemSelectedListener(this);
     }
 
+    private void setHeader(){
+        sharedPreferences = getSharedPreferences("com.example.alexandramolina.cely", Context.MODE_PRIVATE);
+        String email = sharedPreferences.getString("email", "");
+        String name = sharedPreferences.getString("name", "");
+        View header = nv.getHeaderView(0);
+        TextView headerEmail =  header.findViewById(R.id.headerEmail);
+        TextView headerName =  header.findViewById(R.id.headerName);
+        headerEmail.setText(email);
+        headerName.setText(name);
+    }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item){
@@ -163,7 +182,18 @@ public class TraductorActivity extends AppCompatActivity implements NavigationVi
                 break;
             }
             case R.id.cerrarSesion:{
+                abrirMainActivity();
                 Toast.makeText(this, "Cerrar sesion", Toast.LENGTH_SHORT).show();
+                break;
+            }
+            case R.id.noticiaBuscar:{
+                abrirActivityBuscarNoticia();
+                Toast.makeText(this,"Buscar Noticia", Toast.LENGTH_SHORT).show();
+                break;
+            }
+            case R.id.GPS:{
+                abrirActivityGPS();
+                Toast.makeText(this,"GPS", Toast.LENGTH_SHORT).show();
                 break;
             }
         }
@@ -194,6 +224,18 @@ public class TraductorActivity extends AppCompatActivity implements NavigationVi
     }
     public void abrirActivityTraductor(){
         Intent intent = new Intent(this, TraductorActivity.class);
+        startActivity(intent);
+    }
+    public void abrirActivityBuscarNoticia(){
+        Intent intent = new Intent(this, BuscarNoticiaActivity.class);
+        startActivity(intent);
+    }
+    public void abrirActivityGPS(){
+        Intent intent = new Intent(this, GPSActivity.class);
+        startActivity(intent);
+    }
+    public void abrirMainActivity(){
+        Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
     }
 

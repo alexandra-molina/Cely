@@ -35,7 +35,7 @@ public class RegistrarseActivity extends AppCompatActivity {
     Button btnCrearUsuario;
     String usuario;
     String password;
-    String
+    String name;
     AwesomeValidation awesomeValidation;
     SharedPreferences sharedPreferences;
 
@@ -83,7 +83,7 @@ public class RegistrarseActivity extends AppCompatActivity {
 
     public void registro(){
 
-        StringRequest registroRequest = new StringRequest(Request.Method.POST, "https://celytranslator.herokuapp.com/v1/registrations", new Response.Listener<String>() {
+        StringRequest registroRequest = new StringRequest(Request.Method.POST, "https://celytranslate.herokuapp.com/v1/registrations", new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 JSONObject json = null;
@@ -130,7 +130,7 @@ public class RegistrarseActivity extends AppCompatActivity {
                 Map<String, String> params = new HashMap<String, String>();
                 params.put("email",usuario);
                 params.put("password",password);
-                params.put("name",);
+                params.put("name",name);
                 return params;
             }
         };

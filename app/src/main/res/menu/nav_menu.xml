@@ -34,7 +34,7 @@
 
     </item>
 
-    <item android:id="@+id/noticiaPais"
+    <item android:id="@+id/GPS"
         android:title="Noticias en mi ubicación"
         android:icon="@drawable/ic_action_pais">
 

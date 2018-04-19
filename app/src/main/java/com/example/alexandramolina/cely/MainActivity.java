@@ -209,7 +209,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void iniciarSesion(){
 
-        StringRequest loginRequest = new StringRequest(Request.Method.POST, "https://celytranslator.herokuapp.com/v1/sessions", new Response.Listener<String>() {
+        StringRequest loginRequest = new StringRequest(Request.Method.POST, "https://celytranslate.herokuapp.com/v1/sessions", new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 JSONObject json = null;
@@ -266,7 +266,7 @@ public class MainActivity extends AppCompatActivity {
     }
     public void registro(){
 
-        StringRequest registroRequest = new StringRequest(Request.Method.POST, "https://celytranslator.herokuapp.com/v1/registrations", new Response.Listener<String>() {
+        StringRequest registroRequest = new StringRequest(Request.Method.POST, "https://celytranslate.herokuapp.com/v1/registrations", new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 Log.d("Pruebaaaa",response);

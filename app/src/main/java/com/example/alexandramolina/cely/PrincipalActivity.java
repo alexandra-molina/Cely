@@ -136,12 +136,18 @@ public class PrincipalActivity extends AppCompatActivity implements NavigationVi
                 break;
             }
             case R.id.cerrarSesion:{
+                abrirMainActivity();
                 Toast.makeText(this, "Cerrar sesion", Toast.LENGTH_SHORT).show();
                 break;
             }
             case R.id.noticiaBuscar:{
                 abrirActivityBuscarNoticia();
                 Toast.makeText(this,"Buscar Noticia", Toast.LENGTH_SHORT).show();
+                break;
+            }
+            case R.id.GPS:{
+                abrirActivityGPS();
+                Toast.makeText(this,"GPS", Toast.LENGTH_SHORT).show();
                 break;
             }
         }
@@ -176,6 +182,14 @@ public class PrincipalActivity extends AppCompatActivity implements NavigationVi
     }
     public void abrirActivityBuscarNoticia(){
         Intent intent = new Intent(this, BuscarNoticiaActivity.class);
+        startActivity(intent);
+    }
+    public void abrirActivityGPS(){
+        Intent intent = new Intent(this, GPSActivity.class);
+        startActivity(intent);
+    }
+    public void abrirMainActivity(){
+        Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
     }
 }
