@@ -1,7 +1,9 @@
 package com.example.alexandramolina.cely;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
@@ -55,11 +57,12 @@ public class MainActivity extends AppCompatActivity {
     private TextView txt_registarse;
     private Button btn_iniciarSesion;
     CallbackManager callbackManager;
-    TextView txtBirthday, txtEmail;
+    TextView txtBirthday, txtEmail,txtUsuario,txtContrasena;
     ProgressDialog mDialog;
     ImageView imgAvatar;
-
+    SharedPreferences sharedPreferences;
     ActionBar actionBar;
+    String usuario, password;
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -77,6 +80,8 @@ public class MainActivity extends AppCompatActivity {
 
         txt_ayuda = findViewById(R.id.txt_ayuda);
         txt_registarse = findViewById(R.id.txt_registrarse);
+        txtUsuario = findViewById(R.id.txt_usuario);
+        txtContrasena = findViewById(R.id.txt_contrasena);
         btn_iniciarSesion = findViewById(R.id.btn_iniciarSesion);
 
         txtBirthday = findViewById(R.id.txtBirthday);
@@ -98,9 +103,12 @@ public class MainActivity extends AppCompatActivity {
         btn_iniciarSesion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //abrirActivityTraductor();
-                abrirActivityPrincipal();
-                //abrirActivityBienvenido();
+
+                usuario=  txtUsuario.getText().toString();
+                password= txtContrasena.getText().toString();
+                iniciarSesion();
+
+
             }
         });
 
@@ -196,11 +204,12 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
     public void abrirActivityPrincipal(){
+
         Intent intent = new Intent(this, PrincipalActivity.class);
         startActivity(intent);
     }
     public void abrirActivityBienvenido(){
-        iniciarSesion();
+
         Intent intent = new Intent(this, BienvenidoActivity.class);
         startActivity(intent);
     }
@@ -210,7 +219,39 @@ public class MainActivity extends AppCompatActivity {
         StringRequest loginRequest = new StringRequest(Request.Method.POST, "https://celytranslator.herokuapp.com/v1/sessions", new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                Log.d("Pruebaaaa",response);
+                JSONObject json = null;
+                String name="";
+                String email="";
+                String id="";
+                String status="";
+                String message="";
+                String authentication_token="";
+                try {
+                    json = new JSONObject(response);
+                    status=json.getString("status");
+                    message=json.getString("message");
+                    if(status.equals("Success")){
+                        JSONObject main = new JSONObject(json.getString("data"));
+                        name = main.getString("name");
+                        email = main.getString("email");
+                        id = main.getString("id");
+                        authentication_token = main.getString("authentication_token");
+                        sharedPreferences = getSharedPreferences("com.example.alexandramolina.cely", Context.MODE_PRIVATE);
+                        sharedPreferences.edit().putString("authentication_token", authentication_token).apply();
+                        sharedPreferences.edit().putString("id", id).apply();
+                        sharedPreferences.edit().putString("email", email).apply();
+                        sharedPreferences.edit().putString("name", name).apply();
+                        abrirActivityPrincipal();
+                    }
+                    else {
+                        Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
+                        Log.d("ERROR",message);
+                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
             }
         }, new Response.ErrorListener() {
             @Override
@@ -221,8 +262,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<String, String>();
-                params.put("email","andrem.san12@gmail.com");
-                params.put("password","123475");
+                params.put("email",usuario);
+                params.put("password",password);
                 return params;
             }
         };
