@@ -77,8 +77,9 @@ public class Translation extends AppCompatActivity implements NavigationView.OnN
     ActionBar actionBar;
     SharedPreferences sharedPreferences;
     NavigationView nv;
-    String authentication_token;
-    String id_usuario;
+    String authentication_token="";
+    String id_usuario="";
+    String id;
 
 
 
@@ -161,6 +162,11 @@ public class Translation extends AppCompatActivity implements NavigationView.OnN
 
 
     public void translate(View view){
+        sharedPreferences = getSharedPreferences("com.example.alexandramolina.cely", Context.MODE_PRIVATE);
+        id_usuario = sharedPreferences.getString("id", "");
+        authentication_token = sharedPreferences.getString("authentication_token", "");
+        Log.d("TOKEN",authentication_token);
+
 
         traducir();
 
@@ -350,9 +356,7 @@ public class Translation extends AppCompatActivity implements NavigationView.OnN
 
             textos= tt.execute(textos).get();
 
-            sharedPreferences = getSharedPreferences("com.example.alexandramolina.cely", Context.MODE_PRIVATE);
-            id_usuario = sharedPreferences.getString("i", "");
-            authentication_token = sharedPreferences.getString("authentication_token", "");
+            crearNoticia();
 
             abrirActivityTraductor();
 
@@ -468,9 +472,10 @@ public class Translation extends AppCompatActivity implements NavigationView.OnN
         StringRequest noticiaRequest = new StringRequest(Request.Method.POST, "https://celytranslate.herokuapp.com/v1/noticias", new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
+                //Log.d("RES",response);
                 JSONObject json = null;
 
-                String id="";
+
                 String status="";
                 String message="";
                 String authentication_token="";
@@ -481,12 +486,74 @@ public class Translation extends AppCompatActivity implements NavigationView.OnN
                     if(status.equals("Success")){
                         JSONObject main = new JSONObject(json.getString("data"));
                         id = main.getString("id");
-                        authentication_token = main.getString("authentication_token");
+                        authentication_token = json.getString("authentication_token");
+                        //sharedPreferences = getSharedPreferences("com.example.alexandramolina.cely", Context.MODE_PRIVATE);
+                        //sharedPreferences.edit().putString("authentication_token", authentication_token).apply();
+
+                        Log.d("Noticia",authentication_token);
+
+                    }
+                    else {
+                        Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
+                        Log.d("ERROR",message);
+                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                //sharedPreferences = getSharedPreferences("com.example.alexandramolina.cely", Context.MODE_PRIVATE);
+                //authentication_token = sharedPreferences.getString("authentication_token", "");
+                Log.d("TOKEN",authentication_token);
+                for(int i =0; i<textos.size();i ++){
+
+                    agregarLinea(textos.get(i),tipos.get(i), imagenes.get(i),i);
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(getApplicationContext(), "Error", Toast.LENGTH_SHORT).show();
+            }
+        }){
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("id",id_usuario);
+                params.put("authentication_token",authentication_token);
+                params.put("title",textos.get(0));
+                return params;
+            }
+        };
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(noticiaRequest);
+
+    }
+    public void agregarLinea(final String texto, final String tipo, final String imagen, final int position){
+
+
+        StringRequest lineaRequest = new StringRequest(Request.Method.POST, "https://celytranslate.herokuapp.com/v1/noticias/add", new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                //Log.d("RES",response);
+                JSONObject json = null;
+
+
+                String status="";
+                String message="";
+
+                try {
+                    json = new JSONObject(response);
+                    status=json.getString("status");
+                    message=json.getString("message");
+                    if(status.equals("Success")){
+                        JSONObject main = new JSONObject(json.getString("data"));
+
+                        authentication_token = json.getString("authentication_token");
                         sharedPreferences = getSharedPreferences("com.example.alexandramolina.cely", Context.MODE_PRIVATE);
                         sharedPreferences.edit().putString("authentication_token", authentication_token).apply();
-                        sharedPreferences.edit().putString("id", id).apply();
 
-                        abrirActivityPrincipal();
+                        Log.d("Noticia",response);
+
                     }
                     else {
                         Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
@@ -505,15 +572,21 @@ public class Translation extends AppCompatActivity implements NavigationView.OnN
         }){
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
+                Log.d("Token linea",authentication_token);
                 Map<String, String> params = new HashMap<String, String>();
-                params.put("id",id_usuario);
+                params.put("texto",texto);
                 params.put("authentication_token",authentication_token);
-                params.put("title","");
+                params.put("id",id);
+                params.put("position",Integer.toString(position));
+                params.put("imagen",imagen);
+                params.put("tipo",tipo);
+                params.put("id_user",id_usuario);
                 return params;
             }
         };
+
         RequestQueue requestQueue = Volley.newRequestQueue(this);
-        requestQueue.add(noticiaRequest);
+        requestQueue.add(lineaRequest);
 
     }
 }

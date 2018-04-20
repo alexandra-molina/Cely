@@ -13,7 +13,11 @@
         android:layout_height="match_parent"
         android:background="@drawable/background">
 
-
+        <GridView
+            android:id="@+id/gridView4"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:numColumns="1"/>
     </RelativeLayout>
 
     <android.support.design.widget.NavigationView

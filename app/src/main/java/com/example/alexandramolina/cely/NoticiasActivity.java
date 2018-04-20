@@ -43,7 +43,6 @@ public class NoticiasActivity extends AppCompatActivity implements NavigationVie
     String linkP = "";
     String l = "";
     ArrayList<News> news = new ArrayList<>();
-    NoticiasActivity.DownloadTask downloadTask;
     NewsAdapter adapter;
     GridView gridView3;
     ActionBar actionBar;
@@ -196,7 +195,7 @@ public class NoticiasActivity extends AppCompatActivity implements NavigationVie
     }
     public void buscarNoticia(){
         l = linkP1;
-        downloadTask = new NoticiasActivity.DownloadTask();
+        DownloadTask downloadTask = new DownloadTask();
         try {
 
             JSONObject jsonObject = new JSONObject(downloadTask.execute(l).get());
