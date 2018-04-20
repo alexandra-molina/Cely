@@ -136,6 +136,11 @@ public class PrincipalActivity extends AppCompatActivity implements NavigationVi
                 break;
             }
             case R.id.cerrarSesion:{
+                sharedPreferences = getSharedPreferences("com.example.alexandramolina.cely", Context.MODE_PRIVATE);
+                sharedPreferences.edit().putString("authentication_token", "").apply();
+                sharedPreferences.edit().putString("id", "").apply();
+                sharedPreferences.edit().putString("email", "").apply();
+                sharedPreferences.edit().putString("name", "").apply();
                 abrirMainActivity();
                 Toast.makeText(this, "Cerrar sesion", Toast.LENGTH_SHORT).show();
                 break;
