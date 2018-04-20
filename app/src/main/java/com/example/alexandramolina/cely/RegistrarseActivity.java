@@ -4,6 +4,9 @@ package com.example.alexandramolina.cely;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -38,6 +41,7 @@ public class RegistrarseActivity extends AppCompatActivity {
     String email;
     AwesomeValidation awesomeValidation;
     SharedPreferences sharedPreferences;
+    ActionBar actionBar;
 
 
     @Override
@@ -53,6 +57,9 @@ public class RegistrarseActivity extends AppCompatActivity {
         txtConfirmPassword = findViewById(R.id.txtConfirmPassword);
 
         btnCrearUsuario = findViewById(R.id.crearUsuario_button);
+
+        actionBar = getSupportActionBar();
+        actionBar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#233a62")));
 
         String regexPassword = "(?=.*[a-z])(?=.*[A-Z])(?=.*[\\d])(?=.*[~`!@#\\$%\\^&\\*\\(\\)\\-_\\+=\\{\\}\\[\\]\\|\\;:\"<>,./\\?]).{8,}";
 

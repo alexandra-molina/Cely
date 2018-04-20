@@ -107,7 +107,6 @@ public class BuscarNoticiaActivity extends AppCompatActivity implements Navigati
         downloadTask = new DownloadTask();
         imageDownloadTask = new ImageDownloadTask();
         try {
-
             JSONObject jsonObject = new JSONObject(downloadTask.execute(l).get());
 
             JSONArray jsonArray = new JSONArray(jsonObject.getString("articles"));

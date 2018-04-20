@@ -21,7 +21,6 @@
                 android:layout_height="wrap_content"
                 android:text="Registrarse"
                 android:textAlignment="center"
-                android:textColor="@android:color/black"
                 android:textSize="30sp" />
 
             <ImageView
@@ -78,10 +77,10 @@
 
             <Button
                 android:id="@+id/crearUsuario_button"
-                android:layout_width="180dp"
-                android:layout_height="30dp"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
                 android:layout_gravity="center_horizontal"
-                android:background="@android:color/holo_blue_light"
+                android:backgroundTint="@color/blue"
                 android:text="Crear Usuario"
                 android:textColor="@android:color/white" />
 
