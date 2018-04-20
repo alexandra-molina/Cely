@@ -43,6 +43,14 @@ public class UsuarioActivity extends AppCompatActivity implements NavigationView
         mDrawerLayout.addDrawerListener(mToggle);
         mToggle.syncState();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        TextView emailTx = findViewById(R.id.Email);
+        TextView textView = findViewById(R.id.textView11);
+        sharedPreferences = getSharedPreferences("com.example.alexandramolina.cely", Context.MODE_PRIVATE);
+        String email = sharedPreferences.getString("email", "");
+        String name = sharedPreferences.getString("name", "");
+        emailTx.setText(email);
+        textView.setText(name);
+
 
         setHeader();
     }
@@ -106,6 +114,11 @@ public class UsuarioActivity extends AppCompatActivity implements NavigationView
                 break;
             }
             case R.id.cerrarSesion:{
+                sharedPreferences = getSharedPreferences("com.example.alexandramolina.cely", Context.MODE_PRIVATE);
+                sharedPreferences.edit().putString("authentication_token", "").apply();
+                sharedPreferences.edit().putString("id", "").apply();
+                sharedPreferences.edit().putString("email", "").apply();
+                sharedPreferences.edit().putString("name", "").apply();
                 abrirMainActivity();
                 Toast.makeText(this, "Cerrar sesion", Toast.LENGTH_SHORT).show();
                 break;
