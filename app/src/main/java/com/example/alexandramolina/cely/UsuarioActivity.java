@@ -15,8 +15,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.squareup.picasso.Picasso;
+
+import java.net.MalformedURLException;
+import java.net.URL;
 
 public class UsuarioActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
 
@@ -45,9 +51,18 @@ public class UsuarioActivity extends AppCompatActivity implements NavigationView
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         TextView emailTx = findViewById(R.id.Email);
         TextView textView = findViewById(R.id.textView11);
+        ImageView iv = findViewById(R.id.imageView8);
         sharedPreferences = getSharedPreferences("com.example.alexandramolina.cely", Context.MODE_PRIVATE);
         String email = sharedPreferences.getString("email", "");
         String name = sharedPreferences.getString("name", "");
+        String imagen = sharedPreferences.getString("imagen", "");
+        URL profile_picture = null;
+        try {
+            profile_picture = new URL(imagen);
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+        Picasso.with(this).load(profile_picture.toString()).into(iv);
         emailTx.setText(email);
         textView.setText(name);
 

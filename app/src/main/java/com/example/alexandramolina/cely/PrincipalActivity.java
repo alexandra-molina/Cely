@@ -141,6 +141,7 @@ public class PrincipalActivity extends AppCompatActivity implements NavigationVi
                 sharedPreferences.edit().putString("id", "").apply();
                 sharedPreferences.edit().putString("email", "").apply();
                 sharedPreferences.edit().putString("name", "").apply();
+                sharedPreferences.edit().putString("imagen", "").apply();
                 abrirMainActivity();
                 Toast.makeText(this, "Cerrar sesion", Toast.LENGTH_SHORT).show();
                 break;
@@ -197,4 +198,5 @@ public class PrincipalActivity extends AppCompatActivity implements NavigationVi
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
     }
+
 }

@@ -295,6 +295,7 @@ public class BuscarNoticiaActivity extends AppCompatActivity implements Navigati
                 sharedPreferences.edit().putString("id", "").apply();
                 sharedPreferences.edit().putString("email", "").apply();
                 sharedPreferences.edit().putString("name", "").apply();
+                sharedPreferences.edit().putString("imagen", "").apply();
                 abrirMainActivity();
                 Toast.makeText(this, "Cerrar sesion", Toast.LENGTH_SHORT).show();
                 break;

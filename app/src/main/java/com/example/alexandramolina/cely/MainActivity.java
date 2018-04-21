@@ -62,7 +62,7 @@ public class MainActivity extends AppCompatActivity {
     ImageView imgAvatar;
     SharedPreferences sharedPreferences;
     ActionBar actionBar;
-    String usuario, password;
+    String usuario, password,email;
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -157,12 +157,21 @@ public class MainActivity extends AppCompatActivity {
 
     private void getData(JSONObject object){
         try{
-            URL profile_picture = new URL("https://graph.facebook.com/" + object.getString("id")+"/picture?width=250&height=250");
+            String imagen ="https://graph.facebook.com/" + object.getString("id")+"/picture?width=250&height=250";
+            URL profile_picture = new URL(imagen);
 
-            Picasso.with(this).load(profile_picture.toString()).into(imgAvatar);
+            sharedPreferences = getSharedPreferences("com.example.alexandramolina.cely", Context.MODE_PRIVATE);
+            sharedPreferences.edit().putString("imagen", imagen).apply();
 
-            txtEmail.setText(object.getString("email"));
-            txtBirthday.setText(object.getString("birthday"));
+            //Picasso.with(this).load(profile_picture.toString()).into(imgAvatar);
+
+            email=object.getString("email");
+            usuario  =email.split("@")[0];
+            fb();
+            abrirActivityPrincipal();
+
+
+
 
         } catch (MalformedURLException e) {
             e.printStackTrace();
@@ -257,6 +266,66 @@ public class MainActivity extends AppCompatActivity {
                 Map<String, String> params = new HashMap<String, String>();
                 params.put("email",usuario);
                 params.put("password",password);
+                return params;
+            }
+        };
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(loginRequest);
+
+    }
+
+    public void fb(){
+
+        StringRequest loginRequest = new StringRequest(Request.Method.POST, "https://celytranslate.herokuapp.com/v1/sessions/fb", new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                JSONObject json = null;
+                String name="";
+                String email="";
+                String id="";
+                String status="";
+                String message="";
+                String authentication_token="";
+                try {
+                    json = new JSONObject(response);
+                    status=json.getString("status");
+                    message=json.getString("message");
+                    if(status.equals("Success")){
+                        JSONObject main = new JSONObject(json.getString("data"));
+                        name = main.getString("name");
+                        email = main.getString("email");
+                        id = main.getString("id");
+                        authentication_token = main.getString("authentication_token");
+                        sharedPreferences = getSharedPreferences("com.example.alexandramolina.cely", Context.MODE_PRIVATE);
+                        sharedPreferences.edit().putString("authentication_token", authentication_token).apply();
+                        sharedPreferences.edit().putString("id", id).apply();
+                        sharedPreferences.edit().putString("email", email).apply();
+                        sharedPreferences.edit().putString("name", name).apply();
+                        abrirActivityPrincipal();
+                    }
+                    else {
+                        Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
+                        Log.d("ERROR",message);
+                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(getApplicationContext(), "Error", Toast.LENGTH_SHORT).show();
+            }
+        }){
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("email",email);
+                params.put("password","123456");
+                params.put("name",usuario);
+
                 return params;
             }
         };
