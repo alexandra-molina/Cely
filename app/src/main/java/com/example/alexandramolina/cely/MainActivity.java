@@ -75,6 +75,13 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        sharedPreferences = getSharedPreferences("com.example.alexandramolina.cely", Context.MODE_PRIVATE);
+        String id = sharedPreferences.getString("id", "");
+        if(!(id.equals(""))){
+            abrirActivityPrincipal();
+        }
+       
+
         actionBar = getSupportActionBar();
         actionBar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#233a62")));
 
