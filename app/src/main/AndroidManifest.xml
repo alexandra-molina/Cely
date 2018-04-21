@@ -34,6 +34,9 @@
         <activity android:name=".ArchivosActivity" />
         <activity android:name=".BuscarNoticiaActivity" />
         <activity android:name=".GPSActivity"></activity>
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="81975c728b100897ff6d10db9500bb23e8f6beb9" />
     </application>
 
 </manifest>

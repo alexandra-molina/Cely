@@ -22,6 +22,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.crashlytics.android.answers.Answers;
+import com.crashlytics.android.answers.CustomEvent;
+import com.crashlytics.android.answers.LoginEvent;
+import com.crashlytics.android.answers.SignUpEvent;
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
@@ -32,6 +36,7 @@ import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.squareup.picasso.Picasso;
 
+import io.fabric.sdk.android.Fabric;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -73,6 +78,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Fabric.with(this, new Answers());
         setContentView(R.layout.activity_main);
 
         sharedPreferences = getSharedPreferences("com.example.alexandramolina.cely", Context.MODE_PRIVATE);
@@ -341,7 +347,19 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-        
+    // TODO: Move this method and use your own event name to track your key metrics
+    public void onKeyMetric() {
+        // TODO: Use your own string attributes to track common values over time
+        // TODO: Use your own number attributes to track median value over time
+        Answers.getInstance().logSignUp(new SignUpEvent()
+                .putMethod("Digits")
+                .putSuccess(true));
+
+        Answers.getInstance().logLogin(new LoginEvent()
+                .putMethod("Digits")
+                .putSuccess(true));
+    }
+
 
 
 }
