@@ -62,7 +62,8 @@ public class UsuarioActivity extends AppCompatActivity implements NavigationView
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
-        Picasso.with(this).load(profile_picture.toString()).into(iv);
+        if(!imagen.equals("")){
+        Picasso.with(this).load(profile_picture.toString()).into(iv);}
         emailTx.setText(email);
         textView.setText(name);
 
