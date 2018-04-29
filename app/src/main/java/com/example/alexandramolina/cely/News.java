@@ -17,6 +17,7 @@ public class News {
     private ArrayList<String > tipos= new ArrayList<String>();
 
 
+
     public News(String title, String link) {
         this.title = title;
         this.link = link;
