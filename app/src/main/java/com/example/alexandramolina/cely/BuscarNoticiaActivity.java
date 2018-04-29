@@ -10,6 +10,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -18,9 +19,12 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.TextView;
@@ -50,7 +54,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
-public class BuscarNoticiaActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
+public class BuscarNoticiaActivity extends android.support.v4.app.Fragment{
 
     String linkP1 = "https://newsapi.org/v2/top-headlines?q=";
     String apiKey = "&apiKey=6ea91d289e6e4e53adb8eec7b039bc97";
@@ -64,78 +68,65 @@ public class BuscarNoticiaActivity extends AppCompatActivity implements Navigati
     GridView gridView;
     String page = "";
 
-    ActionBar actionBar;
-    private DrawerLayout mDrawerLayout;
-    private ActionBarDrawerToggle mToggle;
     SharedPreferences sharedPreferences;
-    NavigationView nv;
+    View view;
 
+    @Nullable
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_buscar_noticia);
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        view = inflater.inflate(R.layout.activity_buscar_noticia,container,false);
 
-        gridView = findViewById(R.id.gridView);
+        gridView = view.findViewById(R.id.gridView);
 
         String link;
         String image;
         String title;
 
-        word = findViewById(R.id.word);
+        word = view.findViewById(R.id.word);
 
-        setNavigationViewListner();
-        nv=findViewById(R.id.navigation_view);
-
-
-
-        actionBar = getSupportActionBar();
-        actionBar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#233a62")));
-
-        mDrawerLayout = findViewById(R.id.drawer);
-        mToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.open, R.string.close);
-        mDrawerLayout.addDrawerListener(mToggle);
-        mToggle.syncState();
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-        setHeader();
-
-    }
-
-    public void buscarNoticia(View view){
-        linkP = word.getText().toString();
-        l = linkP1+linkP+apiKey;
-        downloadTask = new DownloadTask();
-        imageDownloadTask = new ImageDownloadTask();
-        try {
-            JSONObject jsonObject = new JSONObject(downloadTask.execute(l).get());
-
-            JSONArray jsonArray = new JSONArray(jsonObject.getString("articles"));
-
-            for(int i = 0; i < 20;i++){
-                JSONObject jsonObject1 = jsonArray.getJSONObject(i);
-                String titulo = jsonObject1.getString("title");
-                String url = jsonObject1.getString("url");
-
-                news.add(new News(titulo, url));
-            }
-        } catch (JSONException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        }
-
-        adapter = new NewsAdapter(this, R.layout.newslistview,news);
-        gridView.setAdapter(adapter);
-        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        Button btn = view.findViewById(R.id.buscar);
+        btn.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                page = news.get(i).getLink();
-                browser();
+            public void onClick(View view) {
+                linkP = word.getText().toString();
+                l = linkP1+linkP+apiKey;
+                downloadTask = new DownloadTask();
+                imageDownloadTask = new ImageDownloadTask();
+                try {
+                    JSONObject jsonObject = new JSONObject(downloadTask.execute(l).get());
+
+                    JSONArray jsonArray = new JSONArray(jsonObject.getString("articles"));
+
+                    for(int i = 0; i < 20;i++){
+                        JSONObject jsonObject1 = jsonArray.getJSONObject(i);
+                        String titulo = jsonObject1.getString("title");
+                        String url = jsonObject1.getString("url");
+
+                        news.add(new News(titulo, url));
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
+                }
+
+                adapter = new NewsAdapter(getActivity().getApplicationContext(), R.layout.newslistview,news);
+                gridView.setAdapter(adapter);
+                gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                        page = news.get(i).getLink();
+                        browser();
+                    }
+                });
             }
         });
+
+        return view;
     }
+
     public void browser(){
         Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(page));
         startActivity(browserIntent);
@@ -229,127 +220,5 @@ public class BuscarNoticiaActivity extends AppCompatActivity implements Navigati
 
         }
 
-    }
-    private void setNavigationViewListner(){
-        NavigationView navigationView = findViewById(R.id.navigation_view);
-        navigationView.setNavigationItemSelectedListener(this);
-    }
-    private void setHeader(){
-        sharedPreferences = getSharedPreferences("com.example.alexandramolina.cely", Context.MODE_PRIVATE);
-        String email = sharedPreferences.getString("email", "");
-        String name = sharedPreferences.getString("name", "");
-        View header = nv.getHeaderView(0);
-        TextView headerEmail =  header.findViewById(R.id.headerEmail);
-        TextView headerName =  header.findViewById(R.id.headerName);
-        headerEmail.setText(email);
-        headerName.setText(name);
-    }
-
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item){
-        if(mToggle.onOptionsItemSelected(item)){
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
-
-    @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-
-        switch(item.getItemId()){
-            case R.id.convertidor:{
-                abrirActivityConvertidor();
-                Toast.makeText(this, "Convertidor", Toast.LENGTH_SHORT).show();
-                break;
-            }
-            case R.id.usuario:{
-                abrirActivityUsuario();
-                Toast.makeText(this, "Usuario", Toast.LENGTH_SHORT).show();
-                break;
-            }
-            case R.id.archivos:{
-                abrirActivityArchivos();
-                Toast.makeText(this, "Archivos", Toast.LENGTH_SHORT).show();
-                break;
-            }
-            case R.id.paginasSugeridas:{
-                abrirActivityPrincipal();
-                Toast.makeText(this, "Paginas sugeridas", Toast.LENGTH_SHORT).show();
-                break;
-            }
-            case R.id.noticias:{
-                abrirActivityNoticias();
-                Toast.makeText(this, "Noticias", Toast.LENGTH_SHORT).show();
-                break;
-            }
-            case R.id.traductor:{
-                abrirActivityTraductor();
-                Toast.makeText(this, "Traductor", Toast.LENGTH_SHORT).show();
-                break;
-            }
-            case R.id.cerrarSesion:{
-                sharedPreferences = getSharedPreferences("com.example.alexandramolina.cely", Context.MODE_PRIVATE);
-                sharedPreferences.edit().putString("authentication_token", "").apply();
-                sharedPreferences.edit().putString("id", "").apply();
-                sharedPreferences.edit().putString("email", "").apply();
-                sharedPreferences.edit().putString("name", "").apply();
-                sharedPreferences.edit().putString("imagen", "").apply();
-                abrirMainActivity();
-                Toast.makeText(this, "Cerrar sesion", Toast.LENGTH_SHORT).show();
-                break;
-            }
-            case R.id.noticiaBuscar:{
-                abrirActivityBuscarNoticia();
-                Toast.makeText(this,"Buscar Noticia", Toast.LENGTH_SHORT).show();
-                break;
-            }
-            case R.id.GPS:{
-                abrirActivityGPS();
-                Toast.makeText(this,"GPS", Toast.LENGTH_SHORT).show();
-                break;
-            }
-        }
-        mDrawerLayout.closeDrawer(GravityCompat.START);
-        return false;
-    }
-    public void abrirActivityConvertidor(){
-        Intent intent = new Intent(this, Translation.class);
-        startActivity(intent);
-    }
-
-    public void abrirActivityPrincipal(){
-        Intent intent = new Intent(this, PrincipalActivity.class);
-        startActivity(intent);
-    }
-
-    public void abrirActivityUsuario(){
-        Intent intent = new Intent(this, UsuarioActivity.class);
-        startActivity(intent);
-    }
-    public void abrirActivityArchivos(){
-        Intent intent = new Intent(this, ArchivosActivity.class);
-        startActivity(intent);
-    }
-    public void abrirActivityNoticias(){
-        Intent intent = new Intent(this, NoticiasActivity.class);
-        startActivity(intent);
-    }
-    public void abrirActivityTraductor(){
-        Intent intent = new Intent(this, TraductorActivity.class);
-        startActivity(intent);
-    }
-    public void abrirActivityBuscarNoticia(){
-        Intent intent = new Intent(this, BuscarNoticiaActivity.class);
-        startActivity(intent);
-    }
-    public void abrirActivityGPS(){
-        Intent intent = new Intent(this, GPSActivity.class);
-        startActivity(intent);
-    }
-    public void abrirMainActivity(){
-        Intent intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
     }
 }

@@ -8,6 +8,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -16,8 +17,10 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.TextView;
@@ -47,7 +50,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
-public class ArchivosActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
+public class ArchivosActivity  extends android.support.v4.app.Fragment{
     ArrayList<News> news = new ArrayList<>();
     NoticiasActivity.DownloadTask downloadTask;
     NewsAdapter adapter;
@@ -59,16 +62,14 @@ public class ArchivosActivity extends AppCompatActivity implements NavigationVie
     NavigationView nv;
     String authentication_token;
     String user_id="";
+    View view;
 
-
+    @Nullable
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_archivos);
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        view = inflater.inflate(R.layout.activity_archivos,container,false);
 
-        setNavigationViewListner();
-        nv=findViewById(R.id.navigation_view);
-        gridView3= findViewById(R.id.gridView4);
+        gridView3= view.findViewById(R.id.gridView4);
         gridView3.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -96,7 +97,7 @@ public class ArchivosActivity extends AppCompatActivity implements NavigationVie
                             news.get(i).getTextos().add(texto);
 
                         }
-                        sharedPreferences = getSharedPreferences("com.example.alexandramolina.cely", Context.MODE_PRIVATE);
+                        sharedPreferences = getActivity().getSharedPreferences("com.example.alexandramolina.cely", Context.MODE_PRIVATE);
                         sharedPreferences.edit().putString("authentication_token", authentication_token).apply();
                         abrirActivityTraductor(news.get(i).getTextos(),news.get(i).getImagenes(),news.get(i).getTipos());
 
@@ -112,149 +113,16 @@ public class ArchivosActivity extends AppCompatActivity implements NavigationVie
 
             }});
 
-        actionBar = getSupportActionBar();
-        actionBar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#233a62")));
-
-        mDrawerLayout = findViewById(R.id.drawer);
-        mToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.open, R.string.close);
-        mDrawerLayout.addDrawerListener(mToggle);
-        mToggle.syncState();
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-        sharedPreferences = getSharedPreferences("com.example.alexandramolina.cely", Context.MODE_PRIVATE);
+        sharedPreferences = getActivity().getSharedPreferences("com.example.alexandramolina.cely", Context.MODE_PRIVATE);
         user_id = sharedPreferences.getString("id", "");
         authentication_token = sharedPreferences.getString("authentication_token", "");
 
         obtenerNoticias();
-        setHeader();
 
 
+        return view;
     }
 
-    private void setNavigationViewListner(){
-        NavigationView navigationView = findViewById(R.id.navigation_view);
-        navigationView.setNavigationItemSelectedListener(this);
-    }
-
-    private void setHeader(){
-        sharedPreferences = getSharedPreferences("com.example.alexandramolina.cely", Context.MODE_PRIVATE);
-        String email = sharedPreferences.getString("email", "");
-        String name = sharedPreferences.getString("name", "");
-        View header = nv.getHeaderView(0);
-        TextView headerEmail =  header.findViewById(R.id.headerEmail);
-        TextView headerName =  header.findViewById(R.id.headerName);
-        headerEmail.setText(email);
-        headerName.setText(name);
-    }
-
-
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item){
-        if(mToggle.onOptionsItemSelected(item)){
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
-
-    @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-
-        switch(item.getItemId()){
-            case R.id.convertidor:{
-                abrirActivityConvertidor();
-                Toast.makeText(this, "Convertidor", Toast.LENGTH_SHORT).show();
-                break;
-            }
-            case R.id.usuario:{
-                abrirActivityUsuario();
-                Toast.makeText(this, "Usuario", Toast.LENGTH_SHORT).show();
-                break;
-            }
-            case R.id.archivos:{
-                abrirActivityArchivos();
-                Toast.makeText(this, "Archivos", Toast.LENGTH_SHORT).show();
-                break;
-            }
-            case R.id.paginasSugeridas:{
-                abrirActivityPrincipal();
-                Toast.makeText(this, "Paginas sugeridas", Toast.LENGTH_SHORT).show();
-                break;
-            }
-            case R.id.noticias:{
-                abrirActivityNoticias();
-                Toast.makeText(this, "Noticias", Toast.LENGTH_SHORT).show();
-                break;
-            }
-            case R.id.traductor:{
-                abrirActivityTraductor();
-                Toast.makeText(this, "Traductor", Toast.LENGTH_SHORT).show();
-                break;
-            }
-            case R.id.cerrarSesion:{
-                sharedPreferences = getSharedPreferences("com.example.alexandramolina.cely", Context.MODE_PRIVATE);
-                sharedPreferences.edit().putString("authentication_token", "").apply();
-                sharedPreferences.edit().putString("id", "").apply();
-                sharedPreferences.edit().putString("email", "").apply();
-                sharedPreferences.edit().putString("name", "").apply();
-                sharedPreferences.edit().putString("imagen", "").apply();
-                abrirMainActivity();
-                Toast.makeText(this, "Cerrar sesion", Toast.LENGTH_SHORT).show();
-                break;
-            }
-            case R.id.noticiaBuscar:{
-                abrirActivityBuscarNoticia();
-                Toast.makeText(this,"Buscar Noticia", Toast.LENGTH_SHORT).show();
-                break;
-            }
-            case R.id.GPS:{
-                abrirActivityGPS();
-                Toast.makeText(this,"GPS", Toast.LENGTH_SHORT).show();
-                break;
-            }
-        }
-        mDrawerLayout.closeDrawer(GravityCompat.START);
-        return false;
-    }
-    public void abrirActivityConvertidor(){
-        Intent intent = new Intent(this, Translation.class);
-        startActivity(intent);
-    }
-
-    public void abrirActivityPrincipal(){
-        Intent intent = new Intent(this, PrincipalActivity.class);
-        startActivity(intent);
-    }
-
-    public void abrirActivityUsuario(){
-        Intent intent = new Intent(this, UsuarioActivity.class);
-        startActivity(intent);
-    }
-    public void abrirActivityArchivos(){
-        Intent intent = new Intent(this, ArchivosActivity.class);
-        startActivity(intent);
-    }
-    public void abrirActivityNoticias(){
-        Intent intent = new Intent(this, NoticiasActivity.class);
-        startActivity(intent);
-    }
-    public void abrirActivityTraductor(){
-        Intent intent = new Intent(this, TraductorActivity.class);
-        startActivity(intent);
-    }
-    public void abrirActivityBuscarNoticia(){
-        Intent intent = new Intent(this, BuscarNoticiaActivity.class);
-        startActivity(intent);
-    }
-    public void abrirActivityGPS(){
-        Intent intent = new Intent(this, GPSActivity.class);
-        startActivity(intent);
-    }
-    public void abrirMainActivity(){
-        Intent intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
-    }
     public class DownloadTask extends AsyncTask<String, Void, String> {
 
         @Override
@@ -321,10 +189,10 @@ public class ArchivosActivity extends AppCompatActivity implements NavigationVie
                     news.add(new News(titulo, ""));
                     news.get(i).setId(ide);
                 }
-                sharedPreferences = getSharedPreferences("com.example.alexandramolina.cely", Context.MODE_PRIVATE);
+                sharedPreferences = getActivity().getSharedPreferences("com.example.alexandramolina.cely", Context.MODE_PRIVATE);
                 sharedPreferences.edit().putString("authentication_token", authentication_token).apply();
 
-                adapter = new NewsAdapter(getApplicationContext(), R.layout.newslistview, news);
+                adapter = new NewsAdapter(getActivity().getApplicationContext(), R.layout.newslistview, news);
                 gridView3.setAdapter(adapter);
 
 
@@ -341,7 +209,7 @@ public class ArchivosActivity extends AppCompatActivity implements NavigationVie
     }
 
         public void abrirActivityTraductor(ArrayList<String> textos,ArrayList<String> imagenes, ArrayList<String> tipos){
-            Intent intent = new Intent(ArchivosActivity.this, NoticiaTraducidaActivity.class);
+            Intent intent = new Intent(getActivity().getApplicationContext(), NoticiaTraducidaActivity.class);
             intent.putExtra("texto",textos);
             intent.putExtra("tipo",tipos);
             intent.putExtra("imagen",imagenes);

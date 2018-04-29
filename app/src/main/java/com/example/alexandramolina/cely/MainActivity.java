@@ -225,7 +225,7 @@ public class MainActivity extends AppCompatActivity {
     }
     public void abrirActivityPrincipal(){
 
-        Intent intent = new Intent(this, PrincipalActivity.class);
+        Intent intent = new Intent(this, InicioActivity.class);
         startActivity(intent);
     }
 

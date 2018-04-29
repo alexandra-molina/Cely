@@ -1,5 +1,6 @@
 package com.example.alexandramolina.cely;
 
+import android.app.FragmentManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -7,6 +8,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -15,188 +17,96 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class PrincipalActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
-
-    ActionBar actionBar;
-    private DrawerLayout mDrawerLayout;
-    private ActionBarDrawerToggle mToggle;
-    SharedPreferences sharedPreferences;
-    NavigationView nv;
-
+public class PrincipalActivity  extends android.support.v4.app.Fragment {
+    @Nullable
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_principal);
-
-        setNavigationViewListner();
-        nv=findViewById(R.id.navigation_view);
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.activity_principal,container,false);
 
 
 
-        actionBar = getSupportActionBar();
-        actionBar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#233a62")));
+        ImageView iv= view.findViewById(R.id.imageView2);
+        iv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                browserBBC();
+            }
+        });
+        iv= view.findViewById(R.id.imageView3);
+        iv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                browserBusinessInsider();
+            }
+        });
+        iv= view.findViewById(R.id.imageView4);
+        iv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                browserCNN();
+            }
+        });
+        iv= view.findViewById(R.id.imageView5);
+        iv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                browserElMundo();
+            }
+        });
+        iv= view.findViewById(R.id.imageView6);
+        iv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                browserLaNacion();
+            }
+        });
+        iv= view.findViewById(R.id.imageView7);
+        iv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                browserEconomist();
+            }
+        });
 
-        mDrawerLayout = findViewById(R.id.drawer);
-        mToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.open, R.string.close);
-        mDrawerLayout.addDrawerListener(mToggle);
-        mToggle.syncState();
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        setHeader();
-
+        return view;
     }
 
-    public void browserBBC(View view){
+
+
+    public void browserBBC(){
         Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.bbc.com/news"));
         startActivity(browserIntent);
     }
-    public void browserCNN(View view){
+    public void browserCNN(){
         Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://edition.cnn.com"));
         startActivity(browserIntent);
     }
-    public void browserLaNacion(View view){
+    public void browserLaNacion(){
         Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.nacion.com"));
         startActivity(browserIntent);
     }
-    public void browserBusinessInsider(View view){
+    public void browserBusinessInsider(){
         Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.businessinsider.com"));
         startActivity(browserIntent);
     }
-    public void browserElMundo(View view){
+    public void browserElMundo(){
         Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.elmundo.es"));
         startActivity(browserIntent);
     }
-    public void browserEconomist(View view){
+    public void browserEconomist(){
         Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.economist.com"));
         startActivity(browserIntent);
     }
 
-    private void setNavigationViewListner(){
-        NavigationView navigationView = findViewById(R.id.navigation_view);
-        navigationView.setNavigationItemSelectedListener(this);
-    }
-    private void setHeader(){
-        sharedPreferences = getSharedPreferences("com.example.alexandramolina.cely", Context.MODE_PRIVATE);
-        String email = sharedPreferences.getString("email", "");
-        String name = sharedPreferences.getString("name", "");
-        View header = nv.getHeaderView(0);
-        TextView headerEmail =  header.findViewById(R.id.headerEmail);
-        TextView headerName =  header.findViewById(R.id.headerName);
-        headerEmail.setText(email);
-        headerName.setText(name);
-    }
 
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item){
-        if(mToggle.onOptionsItemSelected(item)){
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
-
-    @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-
-        switch(item.getItemId()){
-            case R.id.convertidor:{
-                abrirActivityConvertidor();
-                Toast.makeText(this, "Convertidor", Toast.LENGTH_SHORT).show();
-                break;
-            }
-            case R.id.usuario:{
-                abrirActivityUsuario();
-                Toast.makeText(this, "Usuario", Toast.LENGTH_SHORT).show();
-                break;
-            }
-            case R.id.archivos:{
-                abrirActivityArchivos();
-                Toast.makeText(this, "Archivos", Toast.LENGTH_SHORT).show();
-                break;
-            }
-            case R.id.paginasSugeridas:{
-                abrirActivityPrincipal();
-                Toast.makeText(this, "Paginas sugeridas", Toast.LENGTH_SHORT).show();
-                break;
-            }
-            case R.id.noticias:{
-                abrirActivityNoticias();
-                Toast.makeText(this, "Noticias", Toast.LENGTH_SHORT).show();
-                break;
-            }
-            case R.id.traductor:{
-                abrirActivityTraductor();
-                Toast.makeText(this, "Traductor", Toast.LENGTH_SHORT).show();
-                break;
-            }
-            case R.id.cerrarSesion:{
-                sharedPreferences = getSharedPreferences("com.example.alexandramolina.cely", Context.MODE_PRIVATE);
-                sharedPreferences.edit().putString("authentication_token", "").apply();
-                sharedPreferences.edit().putString("id", "").apply();
-                sharedPreferences.edit().putString("email", "").apply();
-                sharedPreferences.edit().putString("name", "").apply();
-                sharedPreferences.edit().putString("imagen", "").apply();
-                abrirMainActivity();
-                Toast.makeText(this, "Cerrar sesion", Toast.LENGTH_SHORT).show();
-                break;
-            }
-            case R.id.noticiaBuscar:{
-                abrirActivityBuscarNoticia();
-                Toast.makeText(this,"Buscar Noticia", Toast.LENGTH_SHORT).show();
-                break;
-            }
-            case R.id.GPS:{
-                abrirActivityGPS();
-                Toast.makeText(this,"GPS", Toast.LENGTH_SHORT).show();
-                break;
-            }
-        }
-        mDrawerLayout.closeDrawer(GravityCompat.START);
-        return false;
-    }
-    public void abrirActivityConvertidor(){
-        Intent intent = new Intent(this, Translation.class);
-        startActivity(intent);
-    }
-
-    public void abrirActivityPrincipal(){
-        Intent intent = new Intent(this, PrincipalActivity.class);
-        startActivity(intent);
-    }
-
-    public void abrirActivityUsuario(){
-        Intent intent = new Intent(this, UsuarioActivity.class);
-        startActivity(intent);
-    }
-    public void abrirActivityArchivos(){
-        Intent intent = new Intent(this, ArchivosActivity.class);
-        startActivity(intent);
-    }
-    public void abrirActivityNoticias(){
-        Intent intent = new Intent(this, NoticiasActivity.class);
-        startActivity(intent);
-    }
-    public void abrirActivityTraductor(){
-        Intent intent = new Intent(this, TraductorActivity.class);
-        startActivity(intent);
-    }
-    public void abrirActivityBuscarNoticia(){
-        Intent intent = new Intent(this, BuscarNoticiaActivity.class);
-        startActivity(intent);
-    }
-    public void abrirActivityGPS(){
-        Intent intent = new Intent(this, GPSActivity.class);
-        startActivity(intent);
-    }
-    public void abrirMainActivity(){
-        Intent intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
-    }
 
 }

@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -15,10 +16,13 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -40,7 +44,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
-public class TraductorActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, AdapterView.OnItemSelectedListener{
+public class TraductorActivity extends android.support.v4.app.Fragment {
 
     ActionBar actionBar;
     private DrawerLayout mDrawerLayout;
@@ -50,33 +54,18 @@ public class TraductorActivity extends AppCompatActivity implements NavigationVi
     private String idioma ="spa";
     private TraductorActivity.TranslationTaskWord tt;
     SharedPreferences sharedPreferences;
-    NavigationView nv;
+    View view;
 
-
+    @Nullable
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_traductor);
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        view = inflater.inflate(R.layout.activity_traductor,container,false);
 
-        setNavigationViewListner();
-        nv=findViewById(R.id.navigation_view);
+        txtPalabra = view.findViewById(R.id.palabra);
+        txtPalabraTraducida = view.findViewById(R.id.palabraTraducida);
+        spinner = view.findViewById(R.id.spinner);
 
-        txtPalabra = findViewById(R.id.palabra);
-        txtPalabraTraducida = findViewById(R.id.palabraTraducida);
-        spinner = findViewById(R.id.spinner);
-
-        actionBar = getSupportActionBar();
-        actionBar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#233a62")));
-
-        mDrawerLayout = findViewById(R.id.drawer);
-        mToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.open, R.string.close);
-        mDrawerLayout.addDrawerListener(mToggle);
-        mToggle.syncState();
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-        setHeader();
-
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.Idiomas, android.R.layout.simple_spinner_item);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity().getApplicationContext(), R.array.Idiomas, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -115,136 +104,17 @@ public class TraductorActivity extends AppCompatActivity implements NavigationVi
             }
 
         });
-    }
 
-    public void translateWord(View view){
-        traducir();
-    }
-
-    private void setNavigationViewListner(){
-        NavigationView navigationView = findViewById(R.id.navigation_view);
-        navigationView.setNavigationItemSelectedListener(this);
-    }
-
-    private void setHeader(){
-        sharedPreferences = getSharedPreferences("com.example.alexandramolina.cely", Context.MODE_PRIVATE);
-        String email = sharedPreferences.getString("email", "");
-        String name = sharedPreferences.getString("name", "");
-        View header = nv.getHeaderView(0);
-        TextView headerEmail =  header.findViewById(R.id.headerEmail);
-        TextView headerName =  header.findViewById(R.id.headerName);
-        headerEmail.setText(email);
-        headerName.setText(name);
-    }
-
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item){
-        if(mToggle.onOptionsItemSelected(item)){
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
-
-    @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-
-        switch(item.getItemId()){
-            case R.id.convertidor:{
-                abrirActivityConvertidor();
-                Toast.makeText(this, "Convertidor", Toast.LENGTH_SHORT).show();
-                break;
+        Button btn = view.findViewById(R.id.btnTraducir);
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                traducir();
             }
-            case R.id.usuario:{
-                abrirActivityUsuario();
-                Toast.makeText(this, "Usuario", Toast.LENGTH_SHORT).show();
-                break;
-            }
-            case R.id.archivos:{
-                abrirActivityArchivos();
-                Toast.makeText(this, "Archivos", Toast.LENGTH_SHORT).show();
-                break;
-            }
-            case R.id.paginasSugeridas:{
-                abrirActivityPrincipal();
-                Toast.makeText(this, "Paginas sugeridas", Toast.LENGTH_SHORT).show();
-                break;
-            }
-            case R.id.noticias:{
-                abrirActivityNoticias();
-                Toast.makeText(this, "Noticias", Toast.LENGTH_SHORT).show();
-                break;
-            }
-            case R.id.traductor:{
-                abrirActivityTraductor();
-                Toast.makeText(this, "Traductor", Toast.LENGTH_SHORT).show();
-                break;
-            }
-            case R.id.cerrarSesion:{
-                sharedPreferences = getSharedPreferences("com.example.alexandramolina.cely", Context.MODE_PRIVATE);
-                sharedPreferences.edit().putString("authentication_token", "").apply();
-                sharedPreferences.edit().putString("id", "").apply();
-                sharedPreferences.edit().putString("email", "").apply();
-                sharedPreferences.edit().putString("name", "").apply();
-                sharedPreferences.edit().putString("imagen", "").apply();
-                abrirMainActivity();
-                Toast.makeText(this, "Cerrar sesion", Toast.LENGTH_SHORT).show();
-                break;
-            }
-            case R.id.noticiaBuscar:{
-                abrirActivityBuscarNoticia();
-                Toast.makeText(this,"Buscar Noticia", Toast.LENGTH_SHORT).show();
-                break;
-            }
-            case R.id.GPS:{
-                abrirActivityGPS();
-                Toast.makeText(this,"GPS", Toast.LENGTH_SHORT).show();
-                break;
-            }
-        }
-        mDrawerLayout.closeDrawer(GravityCompat.START);
-        return false;
-    }
-    public void abrirActivityConvertidor(){
-        Intent intent = new Intent(this, Translation.class);
-        startActivity(intent);
-    }
+        });
 
-    public void abrirActivityPrincipal(){
-        Intent intent = new Intent(this, PrincipalActivity.class);
-        startActivity(intent);
+        return view;
     }
-
-    public void abrirActivityUsuario(){
-        Intent intent = new Intent(this, UsuarioActivity.class);
-        startActivity(intent);
-    }
-    public void abrirActivityArchivos(){
-        Intent intent = new Intent(this, ArchivosActivity.class);
-        startActivity(intent);
-    }
-    public void abrirActivityNoticias(){
-        Intent intent = new Intent(this, NoticiasActivity.class);
-        startActivity(intent);
-    }
-    public void abrirActivityTraductor(){
-        Intent intent = new Intent(this, TraductorActivity.class);
-        startActivity(intent);
-    }
-    public void abrirActivityBuscarNoticia(){
-        Intent intent = new Intent(this, BuscarNoticiaActivity.class);
-        startActivity(intent);
-    }
-    public void abrirActivityGPS(){
-        Intent intent = new Intent(this, GPSActivity.class);
-        startActivity(intent);
-    }
-    public void abrirMainActivity(){
-        Intent intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
-    }
-
 
     public void traducir(){
 
@@ -263,17 +133,6 @@ public class TraductorActivity extends AppCompatActivity implements NavigationVi
         txtPalabraTraducida.setText(palabra);
 
     }
-
-    @Override
-    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-
-    }
-
-    @Override
-    public void onNothingSelected(AdapterView<?> adapterView) {
-
-    }
-
 
     public class TranslationTaskWord extends AsyncTask<String, Integer, String> {
         @Override

@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v4.widget.DrawerLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/drawer"
-    tools:context="com.example.alexandramolina.cely.PrincipalActivity">
+    >
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -25,7 +24,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="90dp"
                     android:layout_marginTop="50dp"
-                    android:onClick="browserBBC"
+                    android:clickable="true"
                     app:srcCompat="@drawable/bbc" />
 
                 <ImageView
@@ -34,7 +33,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="15dp"
                     android:layout_marginTop="50dp"
-                    android:onClick="browserBusinessInsider"
+                    android:clickable="true"
                     app:srcCompat="@drawable/businessinsider" />
 
                 <ImageView
@@ -43,7 +42,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="90dp"
                     android:layout_marginTop="25dp"
-                    android:onClick="browserCNN"
+                    android:clickable="true"
                     app:srcCompat="@drawable/cnn" />
 
                 <ImageView
@@ -52,7 +51,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="15dp"
                     android:layout_marginTop="25dp"
-                    android:onClick="browserElMundo"
+                    android:clickable="true"
                     app:srcCompat="@drawable/elmundo" />
 
                 <ImageView
@@ -61,7 +60,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="90dp"
                     android:layout_marginTop="25dp"
-                    android:onClick="browserLaNacion"
+                    android:clickable="true"
                     app:srcCompat="@drawable/lanacion" />
 
                 <ImageView
@@ -70,22 +69,11 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="15dp"
                     android:layout_marginTop="25dp"
-                    android:onClick="browserEconomist"
+                    android:clickable="true"
                     app:srcCompat="@drawable/theeconomist" />
             </GridLayout>
 
     </RelativeLayout>
 
-    <android.support.design.widget.NavigationView
-        app:headerLayout="@layout/header"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        app:menu="@menu/nav_menu"
-        android:layout_gravity="left"
-        android:id="@+id/navigation_view"
-        app:itemTextColor="@color/colorDarkgray"
-        app:itemIconTint="@color/colorDarkgray"
-        >
 
-    </android.support.design.widget.NavigationView>
-</android.support.v4.widget.DrawerLayout>
+</RelativeLayout>

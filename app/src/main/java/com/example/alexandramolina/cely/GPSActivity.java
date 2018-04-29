@@ -15,6 +15,7 @@ import android.location.LocationManager;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.view.GravityCompat;
@@ -24,8 +25,10 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.GridView;
@@ -47,7 +50,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
-public class GPSActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
+public class GPSActivity extends android.support.v4.app.Fragment{
 
 
     LocationManager locationManager;
@@ -64,22 +67,19 @@ public class GPSActivity extends AppCompatActivity implements NavigationView.OnN
     GridView gridView2;
     String codigo = "US";
     String page = "";
+    View view;
 
-    ActionBar actionBar;
-    private DrawerLayout mDrawerLayout;
-    private ActionBarDrawerToggle mToggle;
     SharedPreferences sharedPreferences;
-    NavigationView nv;
 
+    @Nullable
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_gps);
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        view = inflater.inflate(R.layout.activity_gps,container,false);
 
-        placeName = findViewById(R.id.placeName);
-        gridView2 = findViewById(R.id.gridView2);
+        placeName = view.findViewById(R.id.placeName);
+        gridView2 = view.findViewById(R.id.gridView2);
 
-        locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
+        locationManager = (LocationManager) getActivity().getApplicationContext().getSystemService(Context.LOCATION_SERVICE);
         locationListener = new LocationListener() {
             @Override
             public void onLocationChanged(Location location) {
@@ -101,8 +101,8 @@ public class GPSActivity extends AppCompatActivity implements NavigationView.OnN
 
             }
         };
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this, new String[]{ Manifest.permission.ACCESS_FINE_LOCATION }, 0);
+        if (ActivityCompat.checkSelfPermission(getActivity().getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(getActivity(), new String[]{ Manifest.permission.ACCESS_FINE_LOCATION }, 0);
         }
         else {
             locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
@@ -113,27 +113,14 @@ public class GPSActivity extends AppCompatActivity implements NavigationView.OnN
 
         }
         buscarNoticia();
-        setNavigationViewListner();
-        nv=findViewById(R.id.navigation_view);
-
-
-
-        actionBar = getSupportActionBar();
-        actionBar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#233a62")));
-
-        mDrawerLayout = findViewById(R.id.drawer);
-        mToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.open, R.string.close);
-        mDrawerLayout.addDrawerListener(mToggle);
-        mToggle.syncState();
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-        setHeader();
-
+        return view;
     }
+
+
     public void Country() {
         String pais = null;
-        LocationManager lm = (LocationManager)getApplicationContext().getSystemService(Context.LOCATION_SERVICE);
-        Geocoder geocoder = new Geocoder(getApplicationContext());
+        LocationManager lm = (LocationManager)getActivity().getApplicationContext().getSystemService(Context.LOCATION_SERVICE);
+        Geocoder geocoder = new Geocoder(getActivity().getApplicationContext());
         for(String provider: lm.getAllProviders()) {
             @SuppressWarnings("ResourceType") Location location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
             if(location!=null) {
@@ -152,7 +139,7 @@ public class GPSActivity extends AppCompatActivity implements NavigationView.OnN
                 }
             }
         }
-        Toast.makeText(getApplicationContext(), pais, Toast.LENGTH_LONG).show();
+        Toast.makeText(getActivity().getApplicationContext(), pais, Toast.LENGTH_LONG).show();
     }
 
     @Override
@@ -163,7 +150,7 @@ public class GPSActivity extends AppCompatActivity implements NavigationView.OnN
 
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
 
-                if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+                if (ActivityCompat.checkSelfPermission(getActivity().getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
                     locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
                 }
             }
@@ -195,7 +182,7 @@ public class GPSActivity extends AppCompatActivity implements NavigationView.OnN
             e.printStackTrace();
         }
 
-        adapter = new NewsAdapter(this, R.layout.newslistview,news);
+        adapter = new NewsAdapter(getActivity().getApplicationContext(), R.layout.newslistview,news);
         gridView2.setAdapter(adapter);
         gridView2.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -265,126 +252,5 @@ public class GPSActivity extends AppCompatActivity implements NavigationView.OnN
 
         }
     }
-    private void setNavigationViewListner(){
-        NavigationView navigationView = findViewById(R.id.navigation_view);
-        navigationView.setNavigationItemSelectedListener(this);
-    }
-    private void setHeader(){
-        sharedPreferences = getSharedPreferences("com.example.alexandramolina.cely", Context.MODE_PRIVATE);
-        String email = sharedPreferences.getString("email", "");
-        String name = sharedPreferences.getString("name", "");
-        View header = nv.getHeaderView(0);
-        TextView headerEmail =  header.findViewById(R.id.headerEmail);
-        TextView headerName =  header.findViewById(R.id.headerName);
-        headerEmail.setText(email);
-        headerName.setText(name);
-    }
 
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item){
-        if(mToggle.onOptionsItemSelected(item)){
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
-
-    @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-
-        switch(item.getItemId()){
-            case R.id.convertidor:{
-                abrirActivityConvertidor();
-                Toast.makeText(this, "Convertidor", Toast.LENGTH_SHORT).show();
-                break;
-            }
-            case R.id.usuario:{
-                abrirActivityUsuario();
-                Toast.makeText(this, "Usuario", Toast.LENGTH_SHORT).show();
-                break;
-            }
-            case R.id.archivos:{
-                abrirActivityArchivos();
-                Toast.makeText(this, "Archivos", Toast.LENGTH_SHORT).show();
-                break;
-            }
-            case R.id.paginasSugeridas:{
-                abrirActivityPrincipal();
-                Toast.makeText(this, "Paginas sugeridas", Toast.LENGTH_SHORT).show();
-                break;
-            }
-            case R.id.noticias:{
-                abrirActivityNoticias();
-                Toast.makeText(this, "Noticias", Toast.LENGTH_SHORT).show();
-                break;
-            }
-            case R.id.traductor:{
-                abrirActivityTraductor();
-                Toast.makeText(this, "Traductor", Toast.LENGTH_SHORT).show();
-                break;
-            }
-            case R.id.cerrarSesion:{
-                sharedPreferences = getSharedPreferences("com.example.alexandramolina.cely", Context.MODE_PRIVATE);
-                sharedPreferences.edit().putString("authentication_token", "").apply();
-                sharedPreferences.edit().putString("id", "").apply();
-                sharedPreferences.edit().putString("email", "").apply();
-                sharedPreferences.edit().putString("name", "").apply();
-                sharedPreferences.edit().putString("imagen", "").apply();
-                abrirMainActivity();
-                Toast.makeText(this, "Cerrar sesion", Toast.LENGTH_SHORT).show();
-                break;
-            }
-            case R.id.noticiaBuscar:{
-                abrirActivityBuscarNoticia();
-                Toast.makeText(this,"Buscar Noticia", Toast.LENGTH_SHORT).show();
-                break;
-            }
-            case R.id.GPS:{
-                abrirActivityGPS();
-                Toast.makeText(this,"GPS", Toast.LENGTH_SHORT).show();
-                break;
-            }
-        }
-        mDrawerLayout.closeDrawer(GravityCompat.START);
-        return false;
-    }
-    public void abrirActivityConvertidor(){
-        Intent intent = new Intent(this, Translation.class);
-        startActivity(intent);
-    }
-
-    public void abrirActivityPrincipal(){
-        Intent intent = new Intent(this, PrincipalActivity.class);
-        startActivity(intent);
-    }
-
-    public void abrirActivityUsuario(){
-        Intent intent = new Intent(this, UsuarioActivity.class);
-        startActivity(intent);
-    }
-    public void abrirActivityArchivos(){
-        Intent intent = new Intent(this, ArchivosActivity.class);
-        startActivity(intent);
-    }
-    public void abrirActivityNoticias(){
-        Intent intent = new Intent(this, NoticiasActivity.class);
-        startActivity(intent);
-    }
-    public void abrirActivityTraductor(){
-        Intent intent = new Intent(this, TraductorActivity.class);
-        startActivity(intent);
-    }
-    public void abrirActivityBuscarNoticia(){
-        Intent intent = new Intent(this, BuscarNoticiaActivity.class);
-        startActivity(intent);
-    }
-    public void abrirActivityGPS(){
-        Intent intent = new Intent(this, GPSActivity.class);
-        startActivity(intent);
-    }
-    public void abrirMainActivity(){
-        Intent intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
-    }
 }
