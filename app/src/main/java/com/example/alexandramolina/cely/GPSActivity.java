@@ -36,6 +36,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
+import com.google.type.LatLng;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -71,6 +73,7 @@ public class GPSActivity extends android.support.v4.app.Fragment{
 
     SharedPreferences sharedPreferences;
 
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -83,7 +86,8 @@ public class GPSActivity extends android.support.v4.app.Fragment{
         locationListener = new LocationListener() {
             @Override
             public void onLocationChanged(Location location) {
-
+                //LatLng currentLocation = new LatLng(location.getLatitude(), location.getLongitude());
+                //Country();
             }
 
             @Override
