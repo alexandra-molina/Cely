@@ -21,6 +21,8 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -83,28 +85,34 @@ public class PrincipalActivity  extends android.support.v4.app.Fragment {
 
 
     public void browserBBC(){
-        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.bbc.com/news"));
-        startActivity(browserIntent);
+        //Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.bbc.com/news"));
+        //startActivity(browserIntent);
+        WebviewActivity.start(getActivity().getApplicationContext(), "http://www.bbc.com/news");
     }
     public void browserCNN(){
-        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://edition.cnn.com"));
-        startActivity(browserIntent);
+        //Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://edition.cnn.com"));
+        //startActivity(browserIntent);
+        WebviewActivity.start(getActivity().getApplicationContext(), "https://edition.cnn.com");
     }
     public void browserLaNacion(){
-        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.nacion.com"));
-        startActivity(browserIntent);
+        //Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.nacion.com"));
+        //startActivity(browserIntent);
+        WebviewActivity.start(getActivity().getApplicationContext(), "https://www.nacion.com");
     }
     public void browserBusinessInsider(){
-        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.businessinsider.com"));
-        startActivity(browserIntent);
+        //Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.businessinsider.com"));
+        //startActivity(browserIntent);
+        WebviewActivity.start(getActivity().getApplicationContext(), "http://www.businessinsider.com");
     }
     public void browserElMundo(){
-        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.elmundo.es"));
-        startActivity(browserIntent);
+        //Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.elmundo.es"));
+        //startActivity(browserIntent);
+        WebviewActivity.start(getActivity().getApplicationContext(), "http://www.elmundo.es");
     }
     public void browserEconomist(){
-        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.economist.com"));
-        startActivity(browserIntent);
+        //Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.economist.com"));
+        //startActivity(browserIntent);
+        WebviewActivity.start(getActivity().getApplicationContext(), "https://www.economist.com");
     }
 
 

@@ -128,8 +128,9 @@ public class BuscarNoticiaActivity extends android.support.v4.app.Fragment{
     }
 
     public void browser(){
-        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(page));
-        startActivity(browserIntent);
+        //Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(page));
+        //startActivity(browserIntent);
+        WebviewActivity.start(getActivity().getApplicationContext(), page);
     }
 
     public class DownloadTask extends AsyncTask<String, Void, String> {

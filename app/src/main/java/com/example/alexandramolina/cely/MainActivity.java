@@ -62,7 +62,7 @@ public class MainActivity extends AppCompatActivity {
     private TextView txt_registarse;
     private Button btn_iniciarSesion;
     CallbackManager callbackManager;
-    TextView txtBirthday, txtEmail,txtUsuario,txtContrasena;
+    TextView txtBirthday, txtEmail, txtUsuario,txtContrasena;
     ProgressDialog mDialog;
     ImageView imgAvatar;
     SharedPreferences sharedPreferences;
@@ -210,11 +210,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void abrirActivityAyuda(){
-        Intent intent = new Intent(this, AyudaActivity.class);
+        Intent intent = new Intent(this, WebviewActivity.class);
         startActivity(intent);
     }
     public void abrirActivityRegistrase(){
-
         Intent intent = new Intent(this, RegistrarseActivity.class);
         startActivity(intent);
     }
