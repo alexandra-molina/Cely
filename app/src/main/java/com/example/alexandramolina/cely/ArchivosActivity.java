@@ -73,11 +73,12 @@ public class ArchivosActivity  extends android.support.v4.app.Fragment{
         gridView3.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Log.d("INDICE",Integer.toString(i));
                 DownloadTask downloadTask = new DownloadTask();
                 String status = "";
                 String message = "";
                 try {
-                    JSONObject json = new JSONObject(downloadTask.execute("https://celytranslate.herokuapp.com/v1/noticias/getLines/?id_user=" + user_id + "&authentication_token=" + authentication_token).get());
+                    JSONObject json = new JSONObject(downloadTask.execute("https://celytranslate.herokuapp.com/v1/noticias/getLines/?id_user=" + user_id + "&authentication_token=" + authentication_token +"&id=" + news.get(i).getId() ).get());
                     status = json.getString("status");
                     Log.d("MEsssage", status);
                     if (status.equals("Success")) {
@@ -90,7 +91,12 @@ public class ArchivosActivity  extends android.support.v4.app.Fragment{
                             Log.d("JSON",jsonObject1.toString());
                             String texto = jsonObject1.getString("texto");
                             String tipo = jsonObject1.getString("tipo");
-                            String imagen = jsonObject1.getString("tipo");
+                            String imagen = jsonObject1.getString("imagen");
+
+                            Log.d("TEXTO",texto);
+                            Log.d("TIPO",tipo);
+                            Log.d("IMAGEN",imagen);
+
 
                             news.get(i).getImagenes().add(imagen);
                             news.get(i).getTipos().add(tipo);

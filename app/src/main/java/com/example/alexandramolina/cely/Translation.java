@@ -442,7 +442,7 @@ public class Translation extends android.support.v4.app.Fragment{
         }){
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
-                Log.d("Token linea",authentication_token);
+
                 Map<String, String> params = new HashMap<String, String>();
                 params.put("texto",texto);
                 params.put("authentication_token",authentication_token);
@@ -451,6 +451,7 @@ public class Translation extends android.support.v4.app.Fragment{
                 params.put("imagen",imagen);
                 params.put("tipo",tipo);
                 params.put("id_user",id_usuario);
+                Log.d("Token linea",authentication_token);
                 return params;
             }
         };
