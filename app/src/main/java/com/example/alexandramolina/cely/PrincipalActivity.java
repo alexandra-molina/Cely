@@ -23,16 +23,25 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 public class PrincipalActivity  extends android.support.v4.app.Fragment {
+
+    Button masNoticias;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.activity_principal,container,false);
-
+        masNoticias = view.findViewById(R.id.button3);
+        masNoticias.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(view.getContext(), NoticiasLeerActivity.class));
+            }
+        });
 
 
         ImageView iv= view.findViewById(R.id.imageView2);
@@ -114,7 +123,5 @@ public class PrincipalActivity  extends android.support.v4.app.Fragment {
         //startActivity(browserIntent);
         WebviewActivity.start(getActivity().getApplicationContext(), "https://www.economist.com");
     }
-
-
 
 }
