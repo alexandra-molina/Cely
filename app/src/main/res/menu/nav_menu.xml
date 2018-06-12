@@ -44,6 +44,11 @@
         android:icon="@drawable/ic_action_buscar">
 
     </item>
+    <item android:id="@+id/notas"
+        android:title="Notas"
+        android:icon="@drawable/ic_action_notas">
+
+    </item>
 
     <item android:id="@+id/cerrarSesion"
         android:title="Cerrar Sesión"
