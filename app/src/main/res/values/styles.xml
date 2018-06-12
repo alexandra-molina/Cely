@@ -8,11 +8,15 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+<<<<<<< HEAD
     <style name="ProgressTheme">
         <item name="colorAccent">@color/colorProgressBar</item>
     </style>
 
 
+=======
+
+>>>>>>> Alexandra
     <style name="AppTheme.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
@@ -23,4 +27,11 @@
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
 
+<<<<<<< HEAD
+=======
+    <style name="ProgressTheme">
+        <item name="colorAccent">@color/colorProgressBar</item>
+    </style>
+
+>>>>>>> Alexandra
 </resources>

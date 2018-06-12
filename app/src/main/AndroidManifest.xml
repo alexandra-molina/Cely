@@ -3,6 +3,7 @@
     package="com.example.alexandramolina.cely">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <application
         android:allowBackup="true"
@@ -26,14 +27,20 @@
         <activity android:name=".RegistrarseActivity" />
         <activity android:name=".Translation" />
         <activity android:name=".UsuarioActivity" />
-        <activity
-            android:name=".NotasActivity"
-            android:label="@string/title_activity_notas"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".PaginasActivity" />
         <activity android:name=".NoticiasActivity" />
         <activity android:name=".TraductorActivity" />
-        <activity android:name=".PalabraActivity"></activity>
+        <activity android:name=".NoticiaTraducidaActivity" />
+        <activity android:name=".PrincipalActivity" />
+        <activity android:name=".ArchivosActivity" />
+        <activity android:name=".BuscarNoticiaActivity" />
+        <activity android:name=".GPSActivity" />
+
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="81975c728b100897ff6d10db9500bb23e8f6beb9" />
+
+        <activity android:name=".InicioActivity" />
+        <activity android:name=".WebviewActivity"></activity>
     </application>
 
 </manifest>
