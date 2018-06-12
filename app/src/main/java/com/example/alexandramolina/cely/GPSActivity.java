@@ -86,8 +86,7 @@ public class GPSActivity extends android.support.v4.app.Fragment{
         locationListener = new LocationListener() {
             @Override
             public void onLocationChanged(Location location) {
-                //LatLng currentLocation = new LatLng(location.getLatitude(), location.getLongitude());
-                //Country();
+                Country();
             }
 
             @Override
