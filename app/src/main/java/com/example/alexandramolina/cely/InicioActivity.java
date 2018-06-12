@@ -131,6 +131,11 @@ public class InicioActivity extends AppCompatActivity implements NavigationView.
                 Toast.makeText(this,"GPS", Toast.LENGTH_SHORT).show();
                 break;
             }
+            case R.id.notas:{
+                abrirActivityNotas();
+                Toast.makeText(this,"Notas", Toast.LENGTH_SHORT).show();
+                break;
+            }
         }
         mDrawerLayout.closeDrawer(GravityCompat.START);
         return false;
@@ -169,6 +174,10 @@ public class InicioActivity extends AppCompatActivity implements NavigationView.
     public void abrirActivityGPS(){
         android.support.v4.app.FragmentManager fm = getSupportFragmentManager();
         fm.beginTransaction().replace(R.id.container,new GPSActivity()).commit();
+    }
+   public void abrirActivityNotas(){
+        android.support.v4.app.FragmentManager fm = getSupportFragmentManager();
+        fm.beginTransaction().replace(R.id.container,new NotasFragment()).commit();
     }
     public void abrirMainActivity(){
         Intent intent = new Intent(this, MainActivity.class);
